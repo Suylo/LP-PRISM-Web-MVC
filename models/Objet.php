@@ -45,4 +45,20 @@ class Objet{
         }
     }
 
+    // delete objet by id
+    public static function deleteObjetById($id){
+        $table = static::$objet;
+        $cle = static::$cle;
+        $requete = "DELETE FROM $table WHERE $cle = :id_tag;";
+        $req_prep = Connexion::pdo()->prepare($requete);
+        $valeurs = array("id_tag" => $id);
+        try {
+            $req_prep->execute($valeurs);
+            return true;
+        } catch(PDEException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
+
 }
