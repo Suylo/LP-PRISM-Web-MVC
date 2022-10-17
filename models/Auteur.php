@@ -60,5 +60,73 @@ class Auteur extends Objet {
 			return false;
 		}
 	}
+
+	public static function getNationalitesByNumAuteur($i){
+		$requete = "select * from nationalite inner join estdenationalite e on nationalite.numNationalite = e.numNationalite where numAuteur = :numAuteur";
+		$req_prep = Connexion::pdo()->prepare($requete);
+		$tab = array(
+			"numAuteur" => $i
+		);
+		try {
+			$req_prep->execute($tab);
+			$req_prep->setFetchMode(PDO::FETCH_CLASS, 'Nationalite');
+			$tab = $req_prep->fetchAll();
+			return $tab;
+		} catch (PDOException $e) {
+			echo "Erreur de récupération : " . $e->getMessage();
+			return false;
+		}
+	}
+
+	public static function getNonNationalitesByNumAuteur($i){
+		$requete = "select * from nationalite where numNationalite not in (select numNationalite from estdenationalite where numAuteur = :numAuteur)";
+		$req_prep = Connexion::pdo()->prepare($requete);
+		$tab = array(
+			"numAuteur" => $i
+		);
+		try {
+			$req_prep->execute($tab);
+			$req_prep->setFetchMode(PDO::FETCH_CLASS, 'Nationalite');
+			$tab = $req_prep->fetchAll();
+			return $tab;
+		} catch (PDOException $e) {
+			echo "Erreur de récupération : " . $e->getMessage();
+			return false;
+		}
+	}
+
+	public static function addNationaliteForAuteur($numAuteur, $numNationalite)
+	{
+		$requete = "INSERT INTO estdenationalite (numAuteur, numNationalite) VALUES (:numAuteur, :numNationalite)";
+		$req_prep = Connexion::pdo()->prepare($requete);
+		$tab = array(
+			"numAuteur" => $numAuteur,
+			"numNationalite" => $numNationalite
+		);
+		try {
+			$req_prep->execute($tab);
+			return true;
+		} catch (PDOException $e) {
+			echo "Erreur d'ajout : " . $e->getMessage();
+			return false;
+		}
+	}
+
+	public static function deleteNationaliteForAuteur($numAuteur, $numNationalite)
+	{
+		$requete = "DELETE FROM estdenationalite WHERE numAuteur = :numAuteur AND numNationalite = :numNationalite";
+		$req_prep = Connexion::pdo()->prepare($requete);
+		$tab = array(
+			"numAuteur" => $numAuteur,
+			"numNationalite" => $numNationalite
+		);
+		try {
+			$req_prep->execute($tab);
+			return true;
+		} catch (PDOException $e) {
+			echo "Erreur de suppression : " . $e->getMessage();
+			return false;
+		}
+	}
 }
 ?>

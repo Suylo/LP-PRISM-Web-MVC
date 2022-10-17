@@ -11,7 +11,15 @@ class ObjetControleur
             $lienDetails = "<a class='bouton bouton-see' href=\"routeur.php?controleur=" . static::$objet . "Controleur&action=lireObjet&num" .static::$objet . "=$numObjet\"><i class='bi bi-eye'></i></a>";
             $lienEdit = "<a class='bouton bouton-edit' href=\"routeur.php?controleur=" . static::$objet . "Controleur&action=editObjet&num" .static::$objet . "=$numObjet\"><i class='bi bi-pencil'></i></a>";
             $lienDelete = "<a class='bouton bouton-delete' href=\"routeur.php?controleur=" . static::$objet . "Controleur&action=deleteObjet&num" .static::$objet . "=$numObjet\"><i class='bi bi-trash'></i></a>";
-            $tableauAffichage[] = "<div class='ligne'><div>[N°<strong>" . $numObjet. "</strong>] " .  static::$objet. "</div><div> $lienDetails&nbsp;$lienEdit&nbsp;$lienDelete</div> </div>";
+            $lienLivre = "<a class='bouton bouton-livre' href=\"routeur.php?controleur=" . static::$objet . "Controleur&action=definirAuteurs&num" .static::$objet . "=$numObjet\"><i class='bi bi-pencil-square'></i></a>";
+            $lienAuteurs = "<a class='bouton bouton-nationalite' href=\"routeur.php?controleur=AuteurControleur&action=definirNationalites&num" .static::$objet . "=$numObjet\"><i class='bi bi-flag'></i></a>";
+            if(static::$objet == "Auteur"){
+                $tableauAffichage[] = "<div class='ligne'><div>[N°<strong>" . $numObjet. "</strong>] " .  static::$objet. "</div><div> $lienAuteurs&nbsp;&nbsp;$lienDetails&nbsp;$lienEdit&nbsp;$lienDelete</div> </div>";
+            } else if (static::$objet == "Livre") {
+                $tableauAffichage[] = "<div class='ligne'><div>[N°<strong>" . $numObjet . "</strong>] " . static::$objet . "</div><div> $lienLivre&nbsp;&nbsp;$lienDetails&nbsp;$lienEdit&nbsp;$lienDelete</div> </div>";
+            } else {
+                $tableauAffichage[] = "<div class='ligne'><div>[N°<strong>" . $numObjet. "</strong>] " .  static::$objet. "</div><div> $lienDetails&nbsp;$lienEdit&nbsp;$lienDelete</div> </div>";
+            }
         }
         include "views/lesObjets.php";
     }

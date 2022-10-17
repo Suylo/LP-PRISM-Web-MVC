@@ -62,4 +62,70 @@ class Livre extends Objet
             return false;
         }
     }
+
+    public static function getAuteursByNumLivre($i){
+        $requete = "select * from auteur where numAuteur in (select numAuteur from estauteurde where numLivre = :numLivre)";
+        $req_prep = Connexion::pdo()->prepare($requete);
+        $tab = array(
+            "numLivre" => $i
+        );
+        try {
+            $req_prep->execute($tab);
+            $req_prep->setFetchMode(PDO::FETCH_CLASS, 'Auteur');
+            $tab = $req_prep->fetchAll();
+            return $tab;
+        } catch (PDOException $e) {
+            echo "Erreur de récupération : " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public static function getNonAuteursByNumLivre($i){
+        $requete = "select * from auteur where numAuteur not in (select numAuteur from estauteurde where numLivre = :numLivre)";
+        $req_prep = Connexion::pdo()->prepare($requete);
+        $tab = array(
+            "numLivre" => $i
+        );
+        try {
+            $req_prep->execute($tab);
+            $req_prep->setFetchMode(PDO::FETCH_CLASS, 'Auteur');
+            $tab = $req_prep->fetchAll();
+            return $tab;
+        } catch (PDOException $e) {
+            echo "Erreur de récupération : " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public static function deleteAuteurForLivre($numLivre, $numAuteur){
+        $requete = "DELETE FROM estauteurde WHERE numLivre = :numLivre AND numAuteur = :numAuteur";
+        $req_prep = Connexion::pdo()->prepare($requete);
+        $tab = array(
+            "numLivre" => $numLivre,
+            "numAuteur" => $numAuteur
+        );
+        try {
+            $req_prep->execute($tab);
+            return true;
+        } catch (PDOException $e) {
+            echo "Erreur de suppression : " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public static function addAuteurForLivre($numLivre, $numAuteur){
+        $requete = "INSERT INTO estauteurde VALUES (:numAuteur, :numLivre)";
+        $req_prep = Connexion::pdo()->prepare($requete);
+        $tab = array(
+            "numLivre" => $numLivre,
+            "numAuteur" => $numAuteur
+        );
+        try {
+            $req_prep->execute($tab);
+            return true;
+        } catch (PDOException $e) {
+            echo "Erreur d'ajout : " . $e->getMessage();
+            return false;
+        }
+    }
 }

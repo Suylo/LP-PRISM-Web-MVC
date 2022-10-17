@@ -35,4 +35,39 @@ class LivreControleur extends ObjetControleur {
             header("Location: routeur.php?action=lireObjets&controleur=LivreControleur&msg=" . $msg . "#modal__msg");
         }
     }
+
+    public static function ajouterAuteurDuLivre(){
+        $numLivre = $_GET['numLivre'];
+        $numAuteur = $_GET['numAuteur'];
+        Livre::addAuteurForLivre($numLivre, $numAuteur);
+        header("Location: routeur.php?action=definirAuteurs&controleur=LivreControleur&numLivre=" . $numLivre);
+    }
+
+    public static function supprimerAuteurDuLivre(){
+        $numLivre = $_GET['numLivre'];
+        $numAuteur = $_GET['numAuteur'];
+        Livre::deleteAuteurForLivre($numLivre, $numAuteur);
+        header("Location: routeur.php?action=definirAuteurs&controleur=LivreControleur&numLivre=" . $numLivre);
+    }
+
+    public static function definirAuteurs(){
+        $titre = "Auteurs du livre";
+        $numLivre = $_GET['numLivre'];
+        $tableauAuteursDuLivre = Livre::getAuteursByNumLivre($numLivre);
+        $tabNonAuteursDuLivre = Livre::getNonAuteursByNumLivre($numLivre);
+        $tableauAffichage = array();
+        if (isset($tableauAuteursDuLivre)) {
+            foreach ($tableauAuteursDuLivre as $tabAuteurs){
+                $tableauAffichage[] = "<div class='ligne'><div>[N°<strong>" . $tabAuteurs->get("numAuteur"). "</strong>] " .  $tabAuteurs->get("nom") . " " . $tabAuteurs->get("prenom")  . "</div> <a class='bouton bouton-delete' href=\"routeur.php?controleur=" . static::$objet . "Controleur&action=supprimerAuteurDuLivre&numAuteur=" . $tabAuteurs->get("numAuteur") . "&numLivre=$numLivre\"><i class='bi bi-trash'></i></a></div>";
+            }
+        }
+        $tableauAffichage[] = "<br style='margin-bottom: 25px'>";
+        if (isset($tabNonAuteursDuLivre)){
+            foreach ($tabNonAuteursDuLivre as $nonAuteurs){
+                $tableauAffichage[] = "<div class='ligne'><div>[N°<strong>" . $nonAuteurs->get("numAuteur"). "</strong>] " .  $nonAuteurs->get("nom") . " " . $nonAuteurs->get("prenom") . "</div><a class='bouton bouton-add' href=\"routeur.php?controleur=" . static::$objet . "Controleur&action=ajouterAuteurDuLivre&numAuteur=" . $nonAuteurs->get("numAuteur"). "&numLivre=$numLivre\"><i class='bi bi-plus'></i></a></div>";
+            }
+        }
+        include "views/lesObjets.php";
+    }
+
 }

@@ -1,4 +1,5 @@
 :root{
+  --see: #75aeff;;
   --edit: #409962;
   --delete: #c0392b;
 }
@@ -50,7 +51,10 @@ nav ul li a.hover:before{
     top: 0;
     left: 0;
     width: 100%;
-    height: 0;
+    visibility: hidden;
+    opacity: 0;
+    height: 100%;
+    transform: translateY(-25px);
     background: orange;
     z-index: -1;
     transition: all 0.2s ease-in-out;
@@ -60,7 +64,9 @@ nav ul li a:hover{
   color: white;
 }
 nav ul li a.hover:hover:before{
-  height: 100%;
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
 }
 div a{
   font-family: "Calibri Light", sans-serif;
@@ -239,4 +245,27 @@ input[type="submit"]:hover {
     background: white;
     color: var(--delete);
     border: 2px solid var(--delete);
+}
+.form p{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+.bouton-livre, .bouton-nationalite{
+    margin-right: 15px;
+    background: var(--see);
+    color: white;
+    border: 2px solid var(--see);
+    border-radius: 7px;
+    padding: 0.5em 1em;
+    font-family: "Calibri Light", sans-serif;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all .1s ease-in;
+}
+.bouton-livre:hover, .bouton-nationalite:hover{
+    background: white;
+    color: var(--see);
+    border: 2px solid var(--see);
 }
