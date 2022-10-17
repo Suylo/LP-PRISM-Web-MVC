@@ -14,7 +14,7 @@ class Adherent extends Objet
     protected $numCategorie;
 
     public function afficher(){
-        return $this->get('nomAdherent') . " " . $this->get('prenomAdherent') . " : " . $this->get('dateAdhesion') . " (" . $this->get('login') . "," . $this->get('mdp') . ")";
+        return $this->get('nomAdherent') . " " . $this->get('prenomAdherent') . " : " . $this->get('dateAdhesion');
     }
 
     public function __construct($data = NULL)

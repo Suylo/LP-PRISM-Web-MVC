@@ -25,6 +25,12 @@ class Auteur extends Objet {
 		parent::__construct($data);
 	}
 
+	// afficher()
+	public function afficher()
+	{
+		return $this->nom . " " . $this->prenom . " (" . $this->anneeNaissance . ")";
+	}
+
 	public static function addAuteur($nom, $prenom, $naissance){
 		$requete = "INSERT INTO Auteur (nom, prenom, anneeNaissance) VALUES (:nom, :prenom, :anneeNaissance)";
 		$req_prep = Connexion::pdo()->prepare($requete);

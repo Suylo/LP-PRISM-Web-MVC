@@ -15,7 +15,7 @@ class Livre extends Objet
     }
 
     public function afficher(){
-        return "[" . $this->get('numLivre') . "] " . $this->get('titre') . " " . $this->get('anneeParution') . " | Genre : " . $this->get('numGenre');
+        return $this->get('titre') . " " . $this->get('anneeParution');
     }
 
     public function get($attribut)

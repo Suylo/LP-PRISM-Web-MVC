@@ -14,11 +14,21 @@ class ObjetControleur
             $lienLivre = "<a class='bouton bouton-livre' href=\"routeur.php?controleur=" . static::$objet . "Controleur&action=definirAuteurs&num" .static::$objet . "=$numObjet\"><i class='bi bi-pencil-square'></i></a>";
             $lienAuteurs = "<a class='bouton bouton-nationalite' href=\"routeur.php?controleur=AuteurControleur&action=definirNationalites&num" .static::$objet . "=$numObjet\"><i class='bi bi-flag'></i></a>";
             if(static::$objet == "Auteur"){
-                $tableauAffichage[] = "<div class='ligne'><div>[N°<strong>" . $numObjet. "</strong>] " .  static::$objet. "</div><div> $lienAuteurs&nbsp;&nbsp;$lienDetails&nbsp;$lienEdit&nbsp;$lienDelete</div> </div>";
+                $tableauAffichage[] = "
+                    <div class='ligne'>
+                        <div>
+                           
+                            [N°<strong>" . $numObjet. "</strong>] " .  $objet->afficher() . "
+                        </div>
+                        <div> 
+                            $lienAuteurs&nbsp;&nbsp;$lienDetails&nbsp;$lienEdit&nbsp;$lienDelete
+                        </div>
+                    </div>
+                ";
             } else if (static::$objet == "Livre") {
-                $tableauAffichage[] = "<div class='ligne'><div>[N°<strong>" . $numObjet . "</strong>] " . static::$objet . "</div><div> $lienLivre&nbsp;&nbsp;$lienDetails&nbsp;$lienEdit&nbsp;$lienDelete</div> </div>";
+                $tableauAffichage[] = "<div class='ligne'><div>[N°<strong>" . $numObjet . "</strong>] " . $objet->afficher() . "</div><div> $lienLivre&nbsp;&nbsp;$lienDetails&nbsp;$lienEdit&nbsp;$lienDelete</div> </div>";
             } else {
-                $tableauAffichage[] = "<div class='ligne'><div>[N°<strong>" . $numObjet. "</strong>] " .  static::$objet. "</div><div> $lienDetails&nbsp;$lienEdit&nbsp;$lienDelete</div> </div>";
+                $tableauAffichage[] = "<div class='ligne'><div>[N°<strong>" . $numObjet. "</strong>] " .  $objet->afficher() . "</div><div> $lienDetails&nbsp;$lienEdit&nbsp;$lienDelete</div> </div>";
             }
         }
         include "views/lesObjets.php";
