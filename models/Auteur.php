@@ -25,8 +25,40 @@ class Auteur extends Objet {
 		parent::__construct($data);
 	}
 
-	public function afficher() {
-		echo "<p>$this->prenom $this->nom, né(e) en $this->anneeNaissance </p>";
+	public static function addAuteur($nom, $prenom, $naissance){
+		$requete = "INSERT INTO Auteur (nom, prenom, anneeNaissance) VALUES (:nom, :prenom, :anneeNaissance)";
+		$req_prep = Connexion::pdo()->prepare($requete);
+		$tab = array(
+			"nom" => $nom,
+			"prenom" => $prenom,
+			"anneeNaissance" => $naissance
+		);
+		try {
+			$req_prep->execute($tab);
+			return true;
+		} catch (PDOException $e) {
+			echo "Erreur d'ajout : " . $e->getMessage();
+			return false;
+		}
+	}
+
+	// update auteur
+	public static function updateAuteur($numAuteur, $nom, $prenom, $anneeNaissance){
+		$requete = "UPDATE Auteur SET nom = :nom, prenom = :prenom, anneeNaissance = :anneeNaissance WHERE numAuteur = :numAuteur";
+		$req_prep = Connexion::pdo()->prepare($requete);
+		$tab = array(
+			"numAuteur" => $numAuteur,
+			"nom" => $nom,
+			"prenom" => $prenom,
+			"anneeNaissance" => $anneeNaissance
+		);
+		try {
+			$req_prep->execute($tab);
+			return true;
+		} catch (PDOException $e) {
+			echo "Erreur de modification : " . $e->getMessage();
+			return false;
+		}
 	}
 }
 ?>

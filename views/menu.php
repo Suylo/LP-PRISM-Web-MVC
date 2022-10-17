@@ -14,12 +14,6 @@
                         <i class="bi-person-plus"></i>&nbsp;Ajouter
                     </a>
                 </li>
-                <li>
-                    <a href="#">
-                        <i class="bi-pencil-square">&nbsp;</i>
-                        Modifier
-                    </a>
-                </li>
             </ul>
         </li>
         <li>
@@ -32,14 +26,8 @@
             <?php } ?>
             <ul class="dropdown">
                 <li>
-                    <a href="#">
+                    <a href="routeur.php?controleur=AdherentControleur&action=addObjet">
                         <i class="bi-person-plus"></i>&nbsp;Ajouter
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="bi-pencil-square">&nbsp;</i>
-                        Modifier
                     </a>
                 </li>
             </ul>
@@ -54,14 +42,8 @@
             <?php } ?>
             <ul class="dropdown">
                 <li>
-                    <a href="#">
+                    <a href="routeur.php?controleur=LivreControleur&action=addObjet">
                         <i class="bi-person-plus"></i>&nbsp;Ajouter
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="bi-pencil-square">&nbsp;</i>
-                        Modifier
                     </a>
                 </li>
             </ul>
@@ -77,14 +59,8 @@
                 <?php } ?>
             <ul class="dropdown">
                 <li>
-                    <a href="#">
+                    <a href="routeur.php?controleur=GenreControleur&action=addObjet">
                         <i class="bi-person-plus"></i>&nbsp;Ajouter
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="bi-pencil-square">&nbsp;</i>
-                        Modifier
                     </a>
                 </li>
             </ul>
@@ -99,14 +75,8 @@
             <?php } ?>
             <ul class="dropdown">
                 <li>
-                    <a href="#">
+                    <a href="routeur.php?controleur=CategorieControleur&action=addObjet">
                         <i class="bi-person-plus"></i>&nbsp;Ajouter
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="bi-pencil-square">&nbsp;</i>
-                        Modifier
                     </a>
                 </li>
             </ul>
@@ -121,14 +91,8 @@
             <?php } ?>
             <ul class="dropdown">
                 <li>
-                    <a href="#">
+                    <a href="routeur.php?controleur=NationaliteControleur&action=addObjet">
                         <i class="bi-person-plus"></i>&nbsp;Ajouter
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="bi-pencil-square">&nbsp;</i>
-                        Modifier
                     </a>
                 </li>
             </ul>

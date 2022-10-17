@@ -8,13 +8,12 @@ class ObjetControleur
         static::$objet::getAllObjets();
         foreach(static::$objet::getAllObjets() as $objet){
             $numObjet = $objet->get(static::$cle);
-            $lienDetails = "<a class='bouton' href=\"routeur.php?controleur=" . static::$objet . "Controleur&action=lireObjet&num" .static::$objet . "=$numObjet\"> détails </a>";
-            $tableauAffichage[] = "<div class='ligne'><div>[N°<strong>" . $numObjet. "</strong>] " .  static::$objet. "</div><div> $lienDetails</div></div>";
+            $lienDetails = "<a class='bouton bouton-see' href=\"routeur.php?controleur=" . static::$objet . "Controleur&action=lireObjet&num" .static::$objet . "=$numObjet\"><i class='bi bi-eye'></i></a>";
+            $lienEdit = "<a class='bouton bouton-edit' href=\"routeur.php?controleur=" . static::$objet . "Controleur&action=editObjet&num" .static::$objet . "=$numObjet\"><i class='bi bi-pencil'></i></a>";
+            $lienDelete = "<a class='bouton bouton-delete' href=\"routeur.php?controleur=" . static::$objet . "Controleur&action=deleteObjet&num" .static::$objet . "=$numObjet\"><i class='bi bi-trash'></i></a>";
+            $tableauAffichage[] = "<div class='ligne'><div>[N°<strong>" . $numObjet. "</strong>] " .  static::$objet. "</div><div> $lienDetails&nbsp;$lienEdit&nbsp;$lienDelete</div> </div>";
         }
-        include("views/debut.php");
-        include("views/menu.php");
         include "views/lesObjets.php";
-        include("views/fin.html");
     }
 
     public static function lireObjet(){
@@ -23,18 +22,33 @@ class ObjetControleur
         $objet = static::$objet::getObjetById($numObjet);
         $tableauAffichage = array();
         $tableauAffichage[] = "<div class='ligne'><div>[N°<strong>" . static::$objet. "</strong>] " .  $numObjet. "</div><div></div></div>";
-        include("views/debut.php");
-        include("views/menu.php");
         include("views/lesObjets.php");
-        include("views/fin.html");
     }
 
     public static function addObjet(){
         $titre = "Ajouter un " . strtolower(static::$objet);
-        include("views/debut.php");
-        include("views/menu.php");
-        include("views/formAddAuteur.php");
-        include("views/fin.html");
+        $fields = static::$champs;
+        include("views/formAddObjet.php");
+    }
+
+    public static function editObjet(){
+        $titre = "Modifier un " . strtolower(static::$objet);
+        $numObjet = $_GET["num".static::$objet];
+        $objet = static::$objet::getObjetById($numObjet);
+        $fields = static::$champs;
+        include("views/formEditObjet.php");
+    }
+
+    public static function deleteObjet(){
+        $titre = "Supprimer un " . strtolower(static::$objet);
+        $numObjet = $_GET["num".static::$objet];
+        if(static::$objet::deleteObjetById($numObjet)){
+            $msg = "Suppression réussie";
+        }else{
+            $msg = "Suppression échouée";
+        }
+        header("Location: routeur.php?controleur=" . static::$objet . "Controleur&action=lireObjets&msg=$msg" . "#modal__msg");
+
     }
 
 }
