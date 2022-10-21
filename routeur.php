@@ -11,19 +11,14 @@
   require_once("controllers/NationaliteControleur.php");
 
 if (!empty($_GET['action']) && !empty($_GET['controleur']) && in_array($_GET["action"],get_class_methods($_GET['controleur']))) {
-    include("views/debut.php");
-    include("views/menu.php");
     $action = $_GET["action"];
     $controleur = $_GET['controleur'];
     $controleur::$action();
-    include("views/fin.html");
 } else {
-    include("views/debut.php");
     include("views/menu.php");
     $controleur = "AuteurControleur";
     $_GET['controleur'] = "AuteurControleur";
     $_GET['action'] = 'lireObjets';
     $action = "lireObjets";
     $controleur::$action();
-    include("views/fin.html");
 }

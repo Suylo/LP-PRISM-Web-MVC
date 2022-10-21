@@ -1,93 +1,152 @@
 :root{
-  --see: #75aeff;;
-  --edit: #409962;
-  --delete: #c0392b;
+    --see: #75aeff;;
+    --edit: #409962;
+    --delete: #c0392b;
+    --bg: #e0e7f3;
+    --white: #fff;
 }
 
 .ligne {
-  display:flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-top:10px;
-  width: 100%;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top:10px;
+    width: 100%;
 }
 
-html, body{
-  margin: 0;
-  padding: 0;
-  font-family: "Calibri", sans-serif;
-  font-size: 18px;
-  background: #e0e7f3;
-}
-nav {
-  margin:10px;
-  padding:5px;
-  overflow: hidden;
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: "Calibri", sans-serif;
+    font-size: 18px;
+    background: var(--bg);
 }
 
+/* Navbar */
 nav {
-  background-color: #aabdff;
-  margin: 0 0 2em 0;
+    padding: 5px;
+    overflow: hidden;
+    background-color: #aabdff;
+    margin: 0 0 2em 0;
 }
-nav a{
+
+nav ul li a{
   color: black;
   text-decoration: none;
   font-family: "Calibri Light", sans-serif;
   margin: 0 15px;
   font-size: 24px;
-  transition: all .4s ease-in-out;
+  transition: all .2s ease-in-out;
   padding: 0.8em;
   border-radius: 7px;
   position: relative;
   z-index: 200;
 }
-nav a.--active{
-  color: white;
-  background: orange;
-}
+
+/* Animation onhover <a> navbar, width a 0 */
 nav ul li a.hover:before{
     content: "";
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    visibility: hidden;
-    opacity: 0;
-    height: 100%;
-    transform: translateY(-25px);
-    background: orange;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 0;
+    height: 5px;
+    background: var(--white);
     z-index: -1;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.4s ease-in-out;
     border-radius: 7px;
 }
-nav ul li a:hover{
-  color: white;
-}
+/* Quand on survole le lien, on remet en position initiale */
 nav ul li a.hover:hover:before{
-    transform: translateY(0);
+    width: 100%;
+}
+/* Hover*/
+nav ul li a:hover{
+    color: var(--white);
+    background: #aabdff;
+    transition: all .2s ease-in-out;
+}
+
+/* Active (quand le lien est cliqué) */
+nav ul li a.--active:before {
+    background-color: var(--white);
+    width: 100%;
+}
+nav ul li a.--active {
+    color: var(--white);
+    background: #aabdff;
+    transition: all .2s ease-in-out;
+}
+
+/* Dropdown menu */
+.dropdown{
+    opacity: 0;
+    padding: 0.4em;
+    margin-top: 1em;
+    margin-left: 0.75em;
+    visibility: hidden;
+    position: absolute;
+    background: var(--white);
+    border: 2px solid #aabdff;
+    border-radius: 7px;
+    flex-direction: column;
+    justify-content: flex-start;
+    z-index: 200;
+    transition: all .2s ease-in-out;
+    transform: translateY(25px);
+}
+nav ul li:hover .dropdown{
     opacity: 1;
     visibility: visible;
+    transition: all .4s ease-in-out;
+    transform: translateY(0);
+    display: flex;
 }
+.dropdown li{
+    margin: 15px 0;
+}
+.dropdown li a{
+    padding: 0.5em;
+}
+.dropdown li a:hover{
+    background: #d998ff;
+    color: var(--white);
+    border-radius: 7px;
+}
+
+nav ul{
+    display: flex;
+    list-style: none;
+    justify-content: space-around;
+}
+
+
+/* Liens global */
 div a{
   font-family: "Calibri Light", sans-serif;
   text-transform: uppercase;
   background: #d998ff;
   border-radius: 7px;
   padding: 0.5em 1em;
-  border-radius: 7px;
-  color: white;
+  color: var(--white);
   text-decoration: none;
   border: 2px solid transparent;
   transition: .1s;
 }
 div a:hover{
   border: 2px solid #d998ff;
-  background: white;
+  background: var(--white);
   color: #d998ff;
 }
+
 div{
   margin: 0.5em;
 }
+
+/* Formulaire de création/maj */
 .form{
   display: flex;
   justify-content: center;
@@ -97,49 +156,8 @@ div{
   margin: 2em auto;
   border: 2px solid #aabdff;
   border-radius: 7px;
-  background-color: white;
+  background-color: var(--white);
   padding: 1em;
-}
-
-.dropdown{
-  opacity: 0;
-  padding: 0.4em;
-  margin-top: 1em;
-  margin-left: 0.75em;
-  visibility: hidden;
-  position: absolute;
-  background: white;
-  border: 2px solid #aabdff;
-  border-radius: 7px;
-  flex-direction: column;
-  justify-content: flex-start;
-  z-index: 200;
-  transition: all .2s ease-in-out;
-  transform: translateY(25px);
-}
-nav ul li:hover .dropdown{
-  opacity: 1;
-  visibility: visible;
-  transition: all .4s ease-in-out;
-  transform: translateY(0);
-  display: flex;
-}
-.dropdown li{
-  margin: 15px 0;
-}
-.dropdown li a{
-  padding: 0.5em;
-}
-.dropdown li a:hover{
-  background: #d998ff;
-  color: white;
-  border-radius: 7px;
-}
-
-nav ul{
-  display: flex;
-  list-style: none;
-  justify-content: space-around;
 }
 
 input{
@@ -151,7 +169,7 @@ input{
 
 input[type="submit"] {
   background: #d998ff;
-  color: white;
+  color: var(--white);
   border: 2px solid #d998ff;
   border-radius: 7px;
   padding: 0.5em;
@@ -161,12 +179,13 @@ input[type="submit"] {
   transition: all .1s ease-in;
 }
 input[type="submit"]:hover {
-  background: white;
+  background: var(--white);
   color: #d998ff;
   border: 2px solid #d998ff;
 }
 
 
+/* Modal qui apparaît une fois qu'il y a ajout/modification/suppression d'un Objet */
 #modal__msg{
   position: fixed;
   top: 0;
@@ -184,7 +203,7 @@ input[type="submit"]:hover {
   transition: all .4s ease-in-out;
 }
 .modal__msg__content{
-    background: white;
+    background: var(--white);
     padding: 1em;
     border-radius: 7px;
     text-align: center;
@@ -194,7 +213,7 @@ input[type="submit"]:hover {
 }
 .modal__msg__content button{
   background: #d998ff;
-  color: white;
+  color: var(--white);
   border: 2px solid #d998ff;
   border-radius: 7px;
   padding: 0.5em 1em;
@@ -204,7 +223,7 @@ input[type="submit"]:hover {
   transition: all .1s ease-in;
 }
 .modal__msg__content button:hover{
-  background: white;
+  background: var(--white);
   color: #d998ff;
   border: 2px solid #d998ff;
 }
@@ -214,9 +233,11 @@ input[type="submit"]:hover {
     visibility: visible;
 }
 
+
+/* Custom des boutons dans le tableau edit/add/delete*/
 .bouton-edit{
     background: var(--edit);
-    color: white;
+    color: var(--white);
     border: 2px solid var(--edit);
     border-radius: 7px;
     padding: 0.5em 1em;
@@ -226,13 +247,14 @@ input[type="submit"]:hover {
     transition: all .1s ease-in;
 }
 .bouton-edit:hover{
-    background: white;
+    background: var(--white);
     color: var(--edit);
     border: 2px solid var(--edit);
 }
+
 .bouton-delete{
     background: var(--delete);
-    color: white;
+    color: var(--white);
     border: 2px solid var(--delete);
     border-radius: 7px;
     padding: 0.5em 1em;
@@ -242,10 +264,11 @@ input[type="submit"]:hover {
     transition: all .1s ease-in;
 }
 .bouton-delete:hover{
-    background: white;
+    background: var(--white);
     color: var(--delete);
     border: 2px solid var(--delete);
 }
+
 .form p{
     display: flex;
     width: 100%;
@@ -255,7 +278,7 @@ input[type="submit"]:hover {
 .bouton-livre, .bouton-nationalite{
     margin-right: 15px;
     background: var(--see);
-    color: white;
+    color: var(--white);
     border: 2px solid var(--see);
     border-radius: 7px;
     padding: 0.5em 1em;
@@ -265,7 +288,7 @@ input[type="submit"]:hover {
     transition: all .1s ease-in;
 }
 .bouton-livre:hover, .bouton-nationalite:hover{
-    background: white;
+    background: var(--white);
     color: var(--see);
     border: 2px solid var(--see);
 }

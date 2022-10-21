@@ -31,7 +31,10 @@ class ObjetControleur
                 $tableauAffichage[] = "<div class='ligne'><div>[N°<strong>" . $numObjet. "</strong>] " .  $objet->afficher() . "</div><div> $lienDetails&nbsp;$lienEdit&nbsp;$lienDelete</div> </div>";
             }
         }
+        include "views/debut.php";
+        include("views/menu.php");
         include "views/lesObjets.php";
+        include("views/fin.html");
     }
 
     public static function lireObjet(){
@@ -40,13 +43,19 @@ class ObjetControleur
         $objet = static::$objet::getObjetById($numObjet);
         $tableauAffichage = array();
         $tableauAffichage[] = "<div class='ligne'><div>[N°<strong>" . static::$objet. "</strong>] " .  $numObjet. "</div><div></div></div>";
+        include "views/debut.php";
+        include("views/menu.php");
         include("views/lesObjets.php");
+        include("views/fin.html");
     }
 
     public static function addObjet(){
         $titre = "Ajouter un " . strtolower(static::$objet);
         $fields = static::$champs;
+        include "views/debut.php";
+        include("views/menu.php");
         include("views/formAddObjet.php");
+        include("views/fin.html");
     }
 
     public static function editObjet(){
@@ -54,7 +63,10 @@ class ObjetControleur
         $numObjet = $_GET["num".static::$objet];
         $objet = static::$objet::getObjetById($numObjet);
         $fields = static::$champs;
+        include "views/debut.php";
+        include("views/menu.php");
         include("views/formEditObjet.php");
+        include("views/fin.html");
     }
 
     public static function deleteObjet(){

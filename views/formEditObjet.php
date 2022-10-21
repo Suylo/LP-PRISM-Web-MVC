@@ -9,7 +9,7 @@
             </legend>
             <?php foreach ($fields as $field => $val): ?>
                 <p>
-                    <label for="<?= $field ?>_id"><?= $val[0] ?></label> :
+                    <label for="<?= $field ?>_id"><?= $val[0] ?> :&nbsp;</label>
                     <input type="<?= $val[1] ?>" name="<?= $field ?>" id="<?= $field ?>_id" value="<?= $objet->get("$field"); ?>" required/>
                 </p>
             <?php endforeach;?>
