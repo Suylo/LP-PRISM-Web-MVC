@@ -70,8 +70,10 @@
                   $tableauAffichage[] = "<div class='ligne'><div>[N°<strong>" . $tabNonNationalite->get("numNationalite"). "</strong>] " .  $tabNonNationalite->get("pays") . " [" . $tabNonNationalite->get("abrege")  . "] </div> <a class='bouton bouton-add' href=\"routeur.php?controleur=" . static::$objet . "Controleur&action=ajouterNationaliteDeLAuteur&numAuteur=" . $numAuteur . "&numNationalite=" . $tabNonNationalite->get("numNationalite") . "\"><i class='bi bi-plus'></i></a></div>";
               }
           }
-
+          include "views/debut.php";
+          include("views/menu.php");
           include "views/lesObjets.php";
+          include("views/fin.html");
       }
   }
 ?>

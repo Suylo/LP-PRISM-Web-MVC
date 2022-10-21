@@ -67,7 +67,10 @@ class LivreControleur extends ObjetControleur {
                 $tableauAffichage[] = "<div class='ligne'><div>[N°<strong>" . $nonAuteurs->get("numAuteur"). "</strong>] " .  $nonAuteurs->get("nom") . " " . $nonAuteurs->get("prenom") . "</div><a class='bouton bouton-add' href=\"routeur.php?controleur=" . static::$objet . "Controleur&action=ajouterAuteurDuLivre&numAuteur=" . $nonAuteurs->get("numAuteur"). "&numLivre=$numLivre\"><i class='bi bi-plus'></i></a></div>";
             }
         }
+        include "views/debut.php";
+        include("views/menu.php");
         include "views/lesObjets.php";
+        include("views/fin.html");
     }
 
 }

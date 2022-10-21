@@ -51,8 +51,7 @@
         <li>
             <?php if($_GET['action'] == "lireObjets" && $_GET['controleur'] == "GenreControleur") {?>
                 <a href="routeur.php?controleur=GenreControleur&action=lireObjets" class="--active hover">
-                        <i class="bi-tag"></i>&nbsp;&nbsp;Genres
-                </a>
+                        <i class="bi-tag"></i>&nbsp;&nbsp;Genres</a>
                 <?php } else { ?>
                     <a href="routeur.php?controleur=GenreControleur&action=lireObjets" class="hover">
                         <i class="bi-tag"></i>&nbsp;&nbsp;Genres</a>
