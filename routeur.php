@@ -15,7 +15,6 @@ if (!empty($_GET['action']) && !empty($_GET['controleur']) && in_array($_GET["ac
     $controleur = $_GET['controleur'];
     $controleur::$action();
 } else {
-    include("views/menu.php");
     $controleur = "AuteurControleur";
     $_GET['controleur'] = "AuteurControleur";
     $_GET['action'] = 'lireObjets';
