@@ -14,10 +14,10 @@ class GenreControleur extends ObjetControleur {
         $intitule = $_GET['intitule'];
         if(Genre::addGenre($intitule)){
             $msg = "Le genre a bien été ajouté !";
-            header("Location: routeur.php?action=lireObjets&controleur=GenreControleur&msg=" . $msg ."#modal__msg");
+            header("Location: index.php?action=lireObjets&controleur=GenreControleur&msg=" . $msg ."#modal__msg");
         } else {
             $msg = "Le genre n'a pas pu être ajouté !";
-            header("Location: routeur.php?action=lireObjets&controleur=GenreControleur&msg=" . $msg . "#modal__msg");
+            header("Location: index.php?action=lireObjets&controleur=GenreControleur&msg=" . $msg . "#modal__msg");
         }
     }
 
@@ -26,10 +26,10 @@ class GenreControleur extends ObjetControleur {
         $intitule = $_GET['intitule'];
         if(Genre::updateGenre($numGenre, $intitule)){
             $msg = "Le genre $numGenre a bien été modifié !";
-            header("Location: routeur.php?action=lireObjets&controleur=GenreControleur&msg=" . $msg ."#modal__msg");
+            header("Location: index.php?action=lireObjets&controleur=GenreControleur&msg=" . $msg ."#modal__msg");
         } else {
             $msg = "Le genre $numGenre n'a pas pu être modifié !";
-            header("Location: routeur.php?action=lireObjets&controleur=GenreControleur&msg=" . $msg . "#modal__msg");
+            header("Location: index.php?action=lireObjets&controleur=GenreControleur&msg=" . $msg . "#modal__msg");
         }
     }
 }

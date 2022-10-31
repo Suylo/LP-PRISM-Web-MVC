@@ -17,10 +17,10 @@ class NationaliteControleur extends ObjetControleur {
         $abrege = $_GET['abrege'];
         if(Nationalite::addNationalite($pays, $abrege)){
             $msg = "La nationalité a bien été ajoutée !";
-            header("Location: routeur.php?action=lireObjets&controleur=NationaliteControleur&msg=" . $msg ."#modal__msg");
+            header("Location: index.php?action=lireObjets&controleur=NationaliteControleur&msg=" . $msg ."#modal__msg");
         } else {
             $msg = "La nationalité n'a pas pu être ajoutée !";
-            header("Location: routeur.php?action=lireObjets&controleur=NationaliteControleur&msg=" . $msg . "#modal__msg");
+            header("Location: index.php?action=lireObjets&controleur=NationaliteControleur&msg=" . $msg . "#modal__msg");
         }
     }
 
@@ -30,10 +30,10 @@ class NationaliteControleur extends ObjetControleur {
         $abrege = $_GET['abrege'];
         if(Nationalite::updateNationalite($numNationalite, $pays, $abrege)){
             $msg = "La nationalité $numNationalite a bien été modifiée !";
-            header("Location: routeur.php?action=lireObjets&controleur=NationaliteControleur&msg=" . $msg ."#modal__msg");
+            header("Location: index.php?action=lireObjets&controleur=NationaliteControleur&msg=" . $msg ."#modal__msg");
         } else {
             $msg = "La nationalité $numNationalite n'a pas pu être modifiée !";
-            header("Location: routeur.php?action=lireObjets&controleur=NationaliteControleur&msg=" . $msg . "#modal__msg");
+            header("Location: index.php?action=lireObjets&controleur=NationaliteControleur&msg=" . $msg . "#modal__msg");
         }
     }
 }

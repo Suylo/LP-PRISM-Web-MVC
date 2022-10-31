@@ -2,6 +2,9 @@
 
 class Objet{
 
+
+    public function affichable() { return true; }
+
     public function __construct($data = NULL){
         if(!is_null($data)){
             foreach ($data as $k => $v){

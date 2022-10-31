@@ -17,7 +17,7 @@
             <p><?= $_GET['msg'] ?></p>
         </div>
         <div class="modal__msg__footer">
-            <button class="btn btn--primary" onclick="window.location.href='routeur.php?controleur=<?= static::$objet?>Controleur&action=lireObjets'">OK</button>
+            <button class="btn btn--primary" onclick="window.location.href='index.php?controleur=<?= static::$objet?>Controleur&action=lireObjets'">OK</button>
         </div>
     </div>
 </div>

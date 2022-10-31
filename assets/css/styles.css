@@ -292,3 +292,16 @@ input[type="submit"]:hover {
     color: var(--see);
     border: 2px solid var(--see);
 }
+
+.login_button{
+    background-color: rgba(53, 63, 150, 0.86);
+    color: white;
+    padding: 10px 20px;
+    border: 2px solid transparent;
+    border-radius: 100px;
+}
+.login_button:hover{
+    color: rgba(53, 63, 150, 0.86);
+    background-color: white;
+    border: 2px solid rgba(53, 63, 150, 0.86);
+}

@@ -17,10 +17,10 @@ class CategorieControleur extends ObjetControleur {
         $nbLivres = $_GET['nbLivresAutorises'];
         if(Categorie::addCategorie($libelle, $nbLivres)){
             $msg = "La catégorie a bien été ajoutée !";
-            header("Location: routeur.php?action=lireObjets&controleur=CategorieControleur&msg=" . $msg ."#modal__msg");
+            header("Location: index.php?action=lireObjets&controleur=CategorieControleur&msg=" . $msg ."#modal__msg");
         } else {
             $msg = "La catégorie n'a pas pu être ajoutée !";
-            header("Location: routeur.php?action=lireObjets&controleur=CategorieControleur&msg=" . $msg . "#modal__msg");
+            header("Location: index.php?action=lireObjets&controleur=CategorieControleur&msg=" . $msg . "#modal__msg");
         }
     }
 
@@ -30,10 +30,10 @@ class CategorieControleur extends ObjetControleur {
         $nbLivres = $_GET['nbLivresAutorises'];
         if(Categorie::updateCategorie($numCategorie, $libelle, $nbLivres)){
             $msg = "La catégorie $numCategorie a bien été modifiée !";
-            header("Location: routeur.php?action=lireObjets&controleur=CategorieControleur&msg=" . $msg ."#modal__msg");
+            header("Location: index.php?action=lireObjets&controleur=CategorieControleur&msg=" . $msg ."#modal__msg");
         } else {
             $msg = "La catégorie $numCategorie n'a pas pu être modifiée !";
-            header("Location: routeur.php?action=lireObjets&controleur=CategorieControleur&msg=" . $msg . "#modal__msg");
+            header("Location: index.php?action=lireObjets&controleur=CategorieControleur&msg=" . $msg . "#modal__msg");
         }
     }
 }

@@ -1,5 +1,5 @@
 <div class="form">
-    <form action="routeur.php" method="get">
+    <form action="index.php" method="get">
         <input type="hidden" name="action" value="modifier<?= static::$objet ?>">
         <input type="hidden" name="controleur" value="<?= static::$objet ?>Controleur">
         <input type="hidden" name="<?= static::$cle ?>" value="<?= $objet->get(static::$cle); ?>">

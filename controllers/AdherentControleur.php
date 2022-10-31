@@ -24,10 +24,10 @@ class AdherentControleur extends ObjetControleur {
         $dateAdhesion = $_GET['dateAdhesion'];
         if(Adherent::addAdherent($login, $mdp, $nom, $prenom, $email, $dateAdhesion)){
             $msg = "L'adhérent a bien été ajouté !";
-            header("Location: routeur.php?action=lireObjets&controleur=AdherentControleur&msg=" . $msg ."#modal__msg");
+            header("Location: index.php?action=lireObjets&controleur=AdherentControleur&msg=" . $msg ."#modal__msg");
         } else {
             $msg = "L'adhérent n'a pas pu être ajouté !";
-            header("Location: routeur.php?action=lireObjets&controleur=AdherentControleur&msg=" . $msg . "#modal__msg");
+            header("Location: index.php?action=lireObjets&controleur=AdherentControleur&msg=" . $msg . "#modal__msg");
         }
     }
 
@@ -40,10 +40,16 @@ class AdherentControleur extends ObjetControleur {
         $dateAdhesion = $_GET['dateAdhesion'];
         if(Adherent::updateAdherent($login, $mdp, $nom, $prenom, $email, $dateAdhesion)){
             $msg = "L'adhérent $login a bien été modifié !";
-            header("Location: routeur.php?action=lireObjets&controleur=AdherentControleur&msg=" . $msg ."#modal__msg");
+            header("Location: index.php?action=lireObjets&controleur=AdherentControleur&msg=" . $msg ."#modal__msg");
         } else {
             $msg = "L'adhérent $login n'a pas pu être modifié !";
-            header("Location: routeur.php?action=lireObjets&controleur=AdherentControleur&msg=" . $msg . "#modal__msg");
+            header("Location: index.php?action=lireObjets&controleur=AdherentControleur&msg=" . $msg . "#modal__msg");
         }
+    }
+
+    public static function afficherFormulaireConnexion(){
+        include_once "views/debut.php";
+        include_once "views/formulaireConnexion.php";
+        include_once "views/fin.html";
     }
 }
