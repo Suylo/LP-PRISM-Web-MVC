@@ -52,4 +52,33 @@ class AdherentControleur extends ObjetControleur {
         include_once "views/formulaireConnexion.php";
         include_once "views/fin.html";
     }
+
+    public static function connecterAdherent()
+    {
+        if(isset($_GET['login']) && isset($_GET['mdp'])){
+            $login = $_GET['login'];
+            $mdp = $_GET['mdp'];
+            $checkMdp = Adherent::checkMDP($login, $mdp);
+            $unAdherent = Adherent::getObjetById($login);
+
+            if($checkMdp){
+                $_SESSION['login'] = $mdp;
+                $_SESSION['isAdmin'] = $unAdherent->isAdmin;
+                header('Location: index.php');
+            } else {
+                self::afficherFormulaireConnexion();
+            }
+        }
+    }
+
+    public static function logout()
+    {
+        // destroy session
+        $_SESSION['login'] = null;
+        $_SESSION['mdp'] = null;
+        setcookie(session_name(), '', time()-1);
+        session_unset();
+        session_destroy();
+        self::afficherFormulaireConnexion();
+    }
 }
