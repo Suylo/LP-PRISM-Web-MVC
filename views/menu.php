@@ -97,9 +97,11 @@
             </ul>
         </li>
         <li>
-            <a href="index.php?controleur=AdherentControleur&action=afficherFormulaireConnexion" class="login_button">
-                <i class="bi-box-arrow-in-right"></i>&nbsp;&nbsp;Se connecter
+            <?php if(Session::userConnected()) { ?>
+            <a href="index.php?controleur=AdherentControleur&action=logout" class="login_button">
+                <i class="bi-box-arrow-in-right"></i>&nbsp;&nbsp;Se déconnecter
             </a>
+            <?php } ?>
         </li>
     </ul>
 </nav>

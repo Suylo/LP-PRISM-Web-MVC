@@ -12,11 +12,17 @@
     require_once("controllers/NationaliteControleur.php");
 
 if (!Session::userConnected() && !Session::userConnecting()){
-    $controleur = "AdherentControleur";
-    $_GET['controleur'] = "AdherentControleur";
-    $_GET['action'] = 'afficherFormulaireConnexion';
-    $action = "afficherFormulaireConnexion";
-    $controleur::$action();
+    if (!empty($_GET['action']) && !empty($_GET['controleur']) && in_array($_GET["action"],get_class_methods($_GET['controleur']))) {
+        $action = $_GET["action"];
+        $controleur = $_GET['controleur'];
+        $controleur::$action();
+    } else {
+        $controleur = "AdherentControleur";
+        $_GET['controleur'] = "AdherentControleur";
+        $_GET['action'] = 'afficherFormulaireConnexion';
+        $action = "afficherFormulaireConnexion";
+        $controleur::$action();
+    }
 } else {
     if (!empty($_GET['action']) && !empty($_GET['controleur']) && in_array($_GET["action"],get_class_methods($_GET['controleur']))) {
         $action = $_GET["action"];

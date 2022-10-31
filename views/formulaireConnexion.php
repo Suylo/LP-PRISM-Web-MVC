@@ -12,7 +12,7 @@
             </p>
             <p>
                 <label for="password_id">Mot de passe :&nbsp;</label>
-                <input type="password" name="password" id="password_id" required/>
+                <input type="password" name="mdp" id="password_id" required/>
             </p>
             <p>
                 <input type="submit" value="Je me connecte" />

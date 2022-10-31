@@ -11,7 +11,7 @@ class Adherent extends Objet
     protected $prenomAdherent;
     protected $email;
     protected $dateAdhesion;
-    protected $isAdmin;
+    public $isAdmin;
     protected $numCategorie;
 
     public function isAdmin() {
@@ -82,4 +82,29 @@ class Adherent extends Objet
         }
     }
 
+    public static function checkMDP($l, $m)
+    {
+        // if $l & $m return 1 from adherent table
+        $query = "SELECT * FROM adherent WHERE login = :login AND mdp = :mdp";
+        $req_prep = Connexion::pdo()->prepare($query);
+        $tab = [
+            "login" => $l,
+            "mdp" => $m
+        ];
+        try {
+            $req_prep->execute($tab);
+            $req_prep->setFetchmode(PDO::FETCH_CLASS, 'Adherent');
+            $returnTab = [];
+            $return = $req_prep->fetch();
+            $returnTab[] = $return;
+            if (count($returnTab) > 0){
+                return true;
+            } else {
+                return false;
+            }
+        } catch (PDOException $e){
+            echo "Erreur get ; " . $e->getMessage();
+            return false;
+        }
+    }
 }
