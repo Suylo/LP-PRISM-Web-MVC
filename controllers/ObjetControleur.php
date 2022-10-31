@@ -7,13 +7,13 @@ class ObjetControleur
         $tableauAffichage = array();
         static::$objet::getAllObjets();
         foreach(static::$objet::getAllObjets() as $objet){
-            if ($objet->affichable()){
-                $numObjet = $objet->get(static::$cle);
-                $lienDetails = "<a class='bouton bouton-see' href=\"index.php?controleur=" . static::$objet . "Controleur&action=lireObjet&num" .static::$objet . "=$numObjet\"><i class='bi bi-eye'></i></a>";
-                $lienEdit = "<a class='bouton bouton-edit' href=\"index.php?controleur=" . static::$objet . "Controleur&action=editObjet&num" .static::$objet . "=$numObjet\"><i class='bi bi-pencil'></i></a>";
-                $lienDelete = "<a class='bouton bouton-delete' href=\"index.php?controleur=" . static::$objet . "Controleur&action=deleteObjet&num" .static::$objet . "=$numObjet\"><i class='bi bi-trash'></i></a>";
-                $lienLivre = "<a class='bouton bouton-livre' href=\"index.php?controleur=" . static::$objet . "Controleur&action=definirAuteurs&num" .static::$objet . "=$numObjet\"><i class='bi bi-pencil-square'></i></a>";
-                $lienAuteurs = "<a class='bouton bouton-nationalite' href=\"index.php?controleur=AuteurControleur&action=definirNationalites&num" .static::$objet . "=$numObjet\"><i class='bi bi-flag'></i></a>";
+            $numObjet = $objet->get(static::$cle);
+            $lienDetails = "<a class='bouton bouton-see' href=\"index.php?controleur=" . static::$objet . "Controleur&action=lireObjet&num" .static::$objet . "=$numObjet\"><i class='bi bi-eye'></i></a>";
+            $lienEdit = "<a class='bouton bouton-edit' href=\"index.php?controleur=" . static::$objet . "Controleur&action=editObjet&num" .static::$objet . "=$numObjet\"><i class='bi bi-pencil'></i></a>";
+            $lienDelete = "<a class='bouton bouton-delete' href=\"index.php?controleur=" . static::$objet . "Controleur&action=deleteObjet&num" .static::$objet . "=$numObjet\"><i class='bi bi-trash'></i></a>";
+            $lienLivre = "<a class='bouton bouton-livre' href=\"index.php?controleur=" . static::$objet . "Controleur&action=definirAuteurs&num" .static::$objet . "=$numObjet\"><i class='bi bi-pencil-square'></i></a>";
+            $lienAuteurs = "<a class='bouton bouton-nationalite' href=\"index.php?controleur=AuteurControleur&action=definirNationalites&num" .static::$objet . "=$numObjet\"><i class='bi bi-flag'></i></a>";
+            if (Session::adminConnected()){
                 if(static::$objet == "Auteur"){
                     $tableauAffichage[] = "
                     <div class='ligne'>
@@ -31,10 +31,13 @@ class ObjetControleur
                 } else {
                     $tableauAffichage[] = "<div class='ligne'><div>[N°<strong>" . $numObjet. "</strong>] " .  $objet->afficher() . "</div><div> $lienDetails&nbsp;$lienEdit&nbsp;$lienDelete</div> </div>";
                 }
+            } else {
+                $tableauAffichage[] = "<div class='ligne'><div>[N°<strong>" . $numObjet. "</strong>] " .  $objet->afficher() . "</div><div> $lienDetails</div> </div>";
+
             }
         }
         include "views/debut.php";
-        include("views/menu.php");
+        Session::menuUrl();
         include "views/lesObjets.php";
         include("views/fin.html");
     }
@@ -46,7 +49,7 @@ class ObjetControleur
         $tableauAffichage = array();
         $tableauAffichage[] = "<div class='ligne'><div>[N°<strong>" . static::$objet. "</strong>] " .  $numObjet. "</div><div></div></div>";
         include "views/debut.php";
-        include("views/menu.php");
+        Session::menuUrl();
         include("views/lesObjets.php");
         include("views/fin.html");
     }
@@ -55,7 +58,7 @@ class ObjetControleur
         $titre = "Ajouter un " . strtolower(static::$objet);
         $fields = static::$champs;
         include "views/debut.php";
-        include("views/menu.php");
+        Session::menuUrl();
         include("views/formAddObjet.php");
         include("views/fin.html");
     }
@@ -66,7 +69,7 @@ class ObjetControleur
         $objet = static::$objet::getObjetById($numObjet);
         $fields = static::$champs;
         include "views/debut.php";
-        include("views/menu.php");
+        Session::menuUrl();
         include("views/formEditObjet.php");
         include("views/fin.html");
     }

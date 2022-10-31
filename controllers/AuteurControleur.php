@@ -71,7 +71,7 @@
               }
           }
           include "views/debut.php";
-          include("views/menu.php");
+          Session::menuUrl();
           include "views/lesObjets.php";
           include("views/fin.html");
       }

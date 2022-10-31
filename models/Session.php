@@ -5,11 +5,7 @@ class Session{
 
     public static function userConnected()
     {
-        if(isset($_SESSION['login'])){
-            return true;
-        } else {
-            return false;
-        }
+        return isset($_SESSION['login']);
     }
 
     public static function adminConnected()
@@ -28,5 +24,15 @@ class Session{
         } else {
             return false;
         }
+    }
+
+    public static function menuUrl()
+    {
+        return self::adminConnected() ? include_once "views/menuAdmin.php" : include_once "views/menuDefault.php";
+    }
+
+    public static function getUserLogged()
+    {
+        return $_SESSION['nomAdherent'] . " " . $_SESSION['prenomAdherent'];
     }
 }

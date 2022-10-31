@@ -7,8 +7,8 @@ class Adherent extends Objet
     protected static $cle = "login";
     protected $login;
     protected $mdp;
-    protected $nomAdherent;
-    protected $prenomAdherent;
+    public $nomAdherent;
+    public $prenomAdherent;
     protected $email;
     protected $dateAdhesion;
     public $isAdmin;

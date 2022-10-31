@@ -63,6 +63,8 @@ class AdherentControleur extends ObjetControleur {
 
             if($checkMdp){
                 $_SESSION['login'] = $mdp;
+                $_SESSION['nomAdherent'] = $unAdherent->nomAdherent;
+                $_SESSION['prenomAdherent'] = $unAdherent->prenomAdherent;
                 $_SESSION['isAdmin'] = $unAdherent->isAdmin;
                 header('Location: index.php');
             } else {

@@ -1,4 +1,4 @@
-<nav>
+<nav class="admin_menu">
     <ul>
         <li>
         <?php if($_GET['action'] == "lireObjets" && $_GET['controleur'] == "AuteurControleur") {?>
@@ -96,12 +96,19 @@
                 </li>
             </ul>
         </li>
+        <?php if(Session::userConnected()) { ?>
         <li>
-            <?php if(Session::userConnected()) { ?>
-            <a href="index.php?controleur=AdherentControleur&action=logout" class="login_button">
-                <i class="bi-box-arrow-in-right"></i>&nbsp;&nbsp;Se déconnecter
+            <a href="#">
+                <strong>Bienvenue M. <?php echo Session::getUserLogged() ?></strong>
             </a>
-            <?php } ?>
+            <ul class="dropdown">
+                    <li>
+                        <a href="index.php?controleur=AdherentControleur&action=logout">
+                            <i class="bi-person-plus"></i>&nbsp;Se déconnecter
+                        </a>
+                    </li>
+            </ul>
         </li>
+        <?php } ?>
     </ul>
 </nav>
