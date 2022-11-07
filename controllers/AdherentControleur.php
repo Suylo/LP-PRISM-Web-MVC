@@ -1,6 +1,11 @@
 <?php
 
 require_once "models/Adherent.php";
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
+
+require 'vendor/autoload.php';
 
 class AdherentControleur extends ObjetControleur {
 
@@ -48,6 +53,8 @@ class AdherentControleur extends ObjetControleur {
     }
 
     public static function afficherFormulaireConnexion(){
+        $titre = "Connexion / Inscription";
+        $message = "";
         include_once "views/debut.php";
         include_once "views/formulaireConnexion.php";
         include_once "views/fin.html";
@@ -59,20 +66,52 @@ class AdherentControleur extends ObjetControleur {
             $login = $_GET['login'];
             $mdp = $_GET['mdp'];
             $checkMdp = Adherent::checkMDP($login, $mdp);
-            var_dump($checkMdp);
             $unAdherent = Adherent::getObjetById($login);
 
-            if($checkMdp){
+            if($checkMdp && $unAdherent->get('chaineValidationEmail') == NULL){
+                $phpmailer = new PHPMailer();
+                $phpmailer->isSMTP();
+                $phpmailer->Host = 'smtp.mailtrap.io';
+                $phpmailer->SMTPAuth = true;
+                $phpmailer->Port = 2525;
+                $phpmailer->Username = '50b2e77111cabb';
+                $phpmailer->Password = '3e9eef1f0c7a06';
+                $phpmailer->CharSet = 'UTF-8';
+
+                try {
+                    $phpmailer->setFrom('mvcbibli@llubine.com', 'Administrator');
+                    $phpmailer->addAddress($unAdherent->get('email'), $unAdherent->get('nomAdherent') . " " . $unAdherent->get('prenomAdherent'));
+                    $phpmailer->isHTML(true);
+                    $phpmailer->Subject = 'Connexion à la bibliothèque';
+                    $phpmailer->Body = "Bonjour " . $unAdherent->get('nomAdherent') . " " . $unAdherent->get('prenomAdherent') . ", vous êtes connecté !";
+                    $phpmailer->send();
+
+                } catch (Exception $e) {
+                    echo "Message could not be sent. Mailer Error: {$phpmailer->ErrorInfo}";
+                }
+
                 $_SESSION['login'] = $mdp;
                 $_SESSION['nomAdherent'] = $unAdherent->nomAdherent;
                 $_SESSION['prenomAdherent'] = $unAdherent->prenomAdherent;
                 $_SESSION['isAdmin'] = $unAdherent->isAdmin;
                 header('Location: index.php');
             } else {
-                header('Location: index.php');
+                $message = "Le login ou le mot de passe est incorrect !";
                 self::afficherFormulaireConnexion();
             }
         }
+    }
+
+    public static function creerCompteAdherent(){
+        $login = $_GET['login'];
+        $mdp = $_GET['mdp'];
+        $nom = $_GET['nomAdherent'];
+        $prenom = $_GET['prenomAdherent'];
+        $email = $_GET['email'];
+        $dateAdhesion = date("Y-m-d");
+        Adherent::addAdherent($login, $mdp, $nom, $prenom, $email, $dateAdhesion);
+        $message = "Votre compte a bien été créé !";
+        self::afficherFormulaireConnexion();
     }
 
     public static function logout()

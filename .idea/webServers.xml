@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="884e4051-83cd-4e33-b03d-95ec8e0af496" name="WEBDEV IUT ORSAY" url="http://webdev.iut-orsay.fr/~llubine/">
+        <fileTransfer rootFolder="/MVCBibli/" accessType="SFTP" host="webdev.iut-orsay.fr" port="6022" sshConfigId="da6beebe-d847-4e43-8892-a8359448312b" sshConfig="llubine@webdev.iut-orsay.fr:6022 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

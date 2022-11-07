@@ -161,10 +161,12 @@ div{
 }
 
 input{
-  border: 2px solid orange;
-  border-radius: 7px;
-  padding: 1em;
-  font-family: "Calibri Light", sans-serif;
+    border: 2px solid orange;
+    border-radius: 7px;
+    width: 100%;
+    padding: 1em;
+    font-size: 18px;
+    font-family: "Calibri Light", sans-serif;
 }
 
 input[type="submit"] {

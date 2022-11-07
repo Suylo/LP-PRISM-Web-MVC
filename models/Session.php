@@ -26,6 +26,12 @@ class Session{
         }
     }
 
+    public static function userCreatingAccount()
+    {
+        $bool = isset($_GET['action']) && $_GET['action'] == "creerCompteAdherent";
+        return $bool;
+    }
+
     public static function menuUrl()
     {
         return self::adminConnected() ? include_once "views/menuAdmin.php" : include_once "views/menuDefault.php";
