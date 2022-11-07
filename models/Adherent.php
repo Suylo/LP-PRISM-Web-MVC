@@ -94,10 +94,8 @@ class Adherent extends Objet
         try {
             $req_prep->execute($tab);
             $req_prep->setFetchmode(PDO::FETCH_CLASS, 'Adherent');
-            $returnTab = [];
             $return = $req_prep->fetch();
-            $returnTab[] = $return;
-            if (count($returnTab) > 0){
+            if ($return != null){
                 return true;
             } else {
                 return false;

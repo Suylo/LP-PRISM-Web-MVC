@@ -59,6 +59,7 @@ class AdherentControleur extends ObjetControleur {
             $login = $_GET['login'];
             $mdp = $_GET['mdp'];
             $checkMdp = Adherent::checkMDP($login, $mdp);
+            var_dump($checkMdp);
             $unAdherent = Adherent::getObjetById($login);
 
             if($checkMdp){
@@ -68,6 +69,7 @@ class AdherentControleur extends ObjetControleur {
                 $_SESSION['isAdmin'] = $unAdherent->isAdmin;
                 header('Location: index.php');
             } else {
+                header('Location: index.php');
                 self::afficherFormulaireConnexion();
             }
         }
