@@ -117,4 +117,38 @@ class Adherent extends Objet
             return false;
         }
     }
+
+    public static function validateAccount($l, $ch)
+    {
+        $query = "SELECT * FROM Adherent WHERE login = :login AND champValidationEmail = :ch";
+        $req_prep = Connexion::pdo()->prepare($query);
+        $tab = [
+            "login" => $l,
+            "ch" => $ch
+        ];
+        try {
+            $req_prep->execute($tab);
+            $req_prep->setFetchmode(PDO::FETCH_CLASS, 'Adherent');
+            $return = $req_prep->fetch();
+            if ($return != null){
+                $query = "UPDATE Adherent SET champValidationEmail = NULL WHERE login = :login";
+                $req_prep = Connexion::pdo()->prepare($query);
+                $tab = [
+                    "login" => $l
+                ];
+                try {
+                    $req_prep->execute($tab);
+                    return true;
+                } catch (PDOException $e){
+                    echo "Erreur get ; " . $e->getMessage();
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } catch (PDOException $e){
+            echo "Erreur get ; " . $e->getMessage();
+            return false;
+        }
+    }
 }

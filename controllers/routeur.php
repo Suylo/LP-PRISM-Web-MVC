@@ -11,7 +11,7 @@
     require_once("controllers/CategorieControleur.php");
     require_once("controllers/NationaliteControleur.php");
 
-if (!Session::userConnected() && !Session::userConnecting() && Session::userCreatingAccount()) {
+if (!Session::userConnected() && !Session::userConnecting() && Session::userCreatingAccount() && Session::userValidatingAccount()) {
     if (!empty($_GET['action']) && !empty($_GET['controleur']) && in_array($_GET["action"],get_class_methods($_GET['controleur']))) {
         $action = $_GET["action"];
         $controleur = $_GET['controleur'];

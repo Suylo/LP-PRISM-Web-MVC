@@ -68,33 +68,13 @@ class AdherentControleur extends ObjetControleur {
             $checkMdp = Adherent::checkMDP($login, $mdp);
             $unAdherent = Adherent::getObjetById($login);
 
-            if($checkMdp && $unAdherent->get('chaineValidationEmail') == NULL){
-                $phpmailer = new PHPMailer();
-                $phpmailer->isSMTP();
-                $phpmailer->Host = 'smtp.mailtrap.io';
-                $phpmailer->SMTPAuth = true;
-                $phpmailer->Port = 2525;
-                $phpmailer->Username = '50b2e77111cabb';
-                $phpmailer->Password = '3e9eef1f0c7a06';
-                $phpmailer->CharSet = 'UTF-8';
-
-                try {
-                    $phpmailer->setFrom('mvcbibli@llubine.com', 'Administrator');
-                    $phpmailer->addAddress($unAdherent->get('email'), $unAdherent->get('nomAdherent') . " " . $unAdherent->get('prenomAdherent'));
-                    $phpmailer->isHTML(true);
-                    $phpmailer->Subject = 'Connexion à la bibliothèque';
-                    $phpmailer->Body = "Bonjour " . $unAdherent->get('nomAdherent') . " " . $unAdherent->get('prenomAdherent') . ", vous êtes connecté !";
-                    $phpmailer->send();
-
-                } catch (Exception $e) {
-                    echo "Message could not be sent. Mailer Error: {$phpmailer->ErrorInfo}";
-                }
-
-                $_SESSION['login'] = $mdp;
-                $_SESSION['nomAdherent'] = $unAdherent->nomAdherent;
-                $_SESSION['prenomAdherent'] = $unAdherent->prenomAdherent;
-                $_SESSION['isAdmin'] = $unAdherent->isAdmin;
+            if($checkMdp && $unAdherent->get('champValidationEmail') == NULL){
                 header('Location: index.php');
+
+                $_SESSION['login'] = $login;
+                $_SESSION['nomAdherent'] = $unAdherent->get('nomAdherent');
+                $_SESSION['prenomAdherent'] = $unAdherent->get('prenomAdherent');
+                $_SESSION['isAdmin'] = $unAdherent->get('isAdmin');
             } else {
                 $message = "Le login ou le mot de passe est incorrect !";
                 self::afficherFormulaireConnexion();
@@ -110,8 +90,33 @@ class AdherentControleur extends ObjetControleur {
         $email = $_GET['email'];
         $dateAdhesion = date("Y-m-d");
         Adherent::addAdherent($login, $mdp, $nom, $prenom, $email, $dateAdhesion);
+        $unAdherent = Adherent::getObjetById($login);
+        $champValidationEmail = $unAdherent->get('champValidationEmail');
+
+
+        $phpmailer = new PHPMailer();
+        $phpmailer->isSMTP();
+        $phpmailer->Host = 'smtp.mailtrap.io';
+        $phpmailer->SMTPAuth = true;
+        $phpmailer->Port = 2525;
+        $phpmailer->Username = '50b2e77111cabb';
+        $phpmailer->Password = '3e9eef1f0c7a06';
+        $phpmailer->CharSet = 'UTF-8';
+
+        try {
+            $phpmailer->setFrom('mvcbibli@llubine.com', 'Administrator');
+            $phpmailer->addAddress("$email", "$prenom $nom");
+            $phpmailer->isHTML(true);
+            $phpmailer->Subject = 'Authentification à deux facteurs';
+            $phpmailer->Body = "Bonjour $prenom $nom, <br> Veuillez cliquer sur le lien ci-dessous pour valider votre adresse email : <br> <a href='local.lpprism.fr/index.php?controleur=AdherentControleur&action=validerCompteAdherent&login=$login&champValidationEmail=$champValidationEmail'>Valider mon adresse email</a>";
+            $phpmailer->send();
+        } catch (Exception $e) {
+            echo "Message could not be sent. Mailer Error: {$phpmailer->ErrorInfo}";
+        }
         $message = "Votre compte a bien été créé !";
-        self::afficherFormulaireConnexion();
+        include "views/debut.php";
+        include "views/notifLienValidation.html";
+        include "views/fin.html";
     }
 
     public static function logout()
@@ -123,5 +128,19 @@ class AdherentControleur extends ObjetControleur {
         session_unset();
         session_destroy();
         self::afficherFormulaireConnexion();
+    }
+
+    public static function validerCompteAdherent()
+    {
+        $login = $_GET['login'];
+        $ch = $_GET['champValidationEmail'];
+
+        if (Adherent::validateAccount($login, $ch)){
+            include "views/debut.php";
+            include "views/compteValide.html";
+            include "views/fin.html";
+        } else {
+            echo "Erreur de validation !";
+        }
     }
 }

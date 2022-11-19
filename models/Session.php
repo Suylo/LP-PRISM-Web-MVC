@@ -41,4 +41,10 @@ class Session{
     {
         return $_SESSION['nomAdherent'] . " " . $_SESSION['prenomAdherent'];
     }
+
+    public static function userValidatingAccount()
+    {
+        $bool = isset($_GET["action"]) && $_GET["action"] == "validerCompteAdherent";
+        return $bool;
+    }
 }
