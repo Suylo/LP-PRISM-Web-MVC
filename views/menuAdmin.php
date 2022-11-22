@@ -1,7 +1,7 @@
 <nav class="admin_menu">
     <ul>
         <li>
-        <?php if($_GET['action'] == "lireObjets" && $_GET['controleur'] == "AuteurControleur") {?>
+        <?php if(isset($_GET['action']) == "lireObjets" && $_GET['controleur'] == "AuteurControleur") {?>
                 <a href="index.php?controleur=AuteurControleur&action=lireObjets" class="--active hover">
                     <i class="bi-book"></i>&nbsp;&nbsp;Auteurs</a>
             <?php } else {?>
@@ -17,7 +17,7 @@
             </ul>
         </li>
         <li>
-        <?php if($_GET['action'] == "lireObjets" && $_GET['controleur'] == "AdherentControleur") {?>
+        <?php if(isset($_GET['action']) == "lireObjets" && $_GET['controleur'] == "AdherentControleur") {?>
                 <a href="index.php?controleur=AdherentControleur&action=lireObjets" class="--active hover">
                     <i class="bi-person"></i>&nbsp;&nbsp;Adhérents</a>
             <?php } else { ?>
@@ -33,7 +33,7 @@
             </ul>
         </li>
         <li>
-            <?php if($_GET['action'] == "lireObjets" && $_GET['controleur'] == "LivreControleur") {?>
+            <?php if(isset($_GET['action']) == "lireObjets" && $_GET['controleur'] == "LivreControleur") {?>
                 <a href="index.php?controleur=LivreControleur&action=lireObjets" class="--active hover">
                     <i class="bi-files"></i>&nbsp;&nbsp;Livres</a>
             <?php } else { ?>
@@ -49,7 +49,7 @@
             </ul>
         </li>
         <li>
-            <?php if($_GET['action'] == "lireObjets" && $_GET['controleur'] == "GenreControleur") {?>
+            <?php if(isset($_GET['action']) == "lireObjets" && $_GET['controleur'] == "GenreControleur") {?>
                 <a href="index.php?controleur=GenreControleur&action=lireObjets" class="--active hover">
                         <i class="bi-tag"></i>&nbsp;&nbsp;Genres</a>
                 <?php } else { ?>
@@ -65,7 +65,7 @@
             </ul>
         </li>
         <li>
-            <?php if($_GET['action'] == "lireObjets" && $_GET['controleur'] == "CategorieControleur") {?>
+            <?php if(isset($_GET['action']) == "lireObjets" && $_GET['controleur'] == "CategorieControleur") {?>
                 <a href="index.php?controleur=CategorieControleur&action=lireObjets" class="--active hover">
                     <i class="bi-tags"></i>&nbsp;&nbsp;Catégories</a>
             <?php } else { ?>
@@ -81,7 +81,7 @@
             </ul>
         </li>
         <li>
-            <?php if($_GET['action'] == "lireObjets" && $_GET['controleur'] == "NationaliteControleur") {?>
+            <?php if(isset($_GET['action']) == "lireObjets" && $_GET['controleur'] == "NationaliteControleur") {?>
                 <a href="index.php?controleur=NationaliteControleur&action=lireObjets" class="--active hover">
                     <i class="bi-flag"></i>&nbsp;&nbsp;Nationalités</a>
             <?php } else { ?>

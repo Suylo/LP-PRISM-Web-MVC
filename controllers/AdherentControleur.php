@@ -89,9 +89,23 @@ class AdherentControleur extends ObjetControleur {
         $prenom = $_GET['prenomAdherent'];
         $email = $_GET['email'];
         $dateAdhesion = date("Y-m-d");
-        Adherent::addAdherent($login, $mdp, $nom, $prenom, $email, $dateAdhesion);
+        //Adherent::addAdherent($login, $mdp, $nom, $prenom, $email, $dateAdhesion);
         $unAdherent = Adherent::getObjetById($login);
-        $champValidationEmail = $unAdherent->get('champValidationEmail');
+        $champValidationEmail = bin2hex(openssl_random_pseudo_bytes(16));
+        $tabObjets = [
+            "login" => $login,
+            "mdp" => $mdp,
+            "nomAdherent" => $nom,
+            "prenomAdherent" => $prenom,
+            "email" => $email,
+            "dateAdhesion" => $dateAdhesion,
+            "numCategorie" => 1,
+            "isAdmin" => 0,
+            "champValidationEmail" => $champValidationEmail,
+        ];
+        Adherent::addObjet($tabObjets);
+
+
 
 
         $phpmailer = new PHPMailer();
@@ -108,7 +122,7 @@ class AdherentControleur extends ObjetControleur {
             $phpmailer->addAddress("$email", "$prenom $nom");
             $phpmailer->isHTML(true);
             $phpmailer->Subject = 'Authentification à deux facteurs';
-            $phpmailer->Body = "Bonjour $prenom $nom, <br> Veuillez cliquer sur le lien ci-dessous pour valider votre adresse email : <br> <a href='local.lpprism.fr/index.php?controleur=AdherentControleur&action=validerCompteAdherent&login=$login&champValidationEmail=$champValidationEmail'>Valider mon adresse email</a>";
+            $phpmailer->Body = "Bonjour $prenom $nom, <br> Veuillez cliquer sur le lien ci-dessous pour valider votre adresse email : <br> <a href='http://local.lpprism.fr/index.php?controleur=AdherentControleur&action=validerCompteAdherent&login=$login&champValidationEmail=$champValidationEmail'>Valider mon adresse email</a>";
             $phpmailer->send();
         } catch (Exception $e) {
             echo "Message could not be sent. Mailer Error: {$phpmailer->ErrorInfo}";

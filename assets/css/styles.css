@@ -331,3 +331,37 @@ nav ul.dropdown li a:hover{
     color: white;
     background: #d998ff;
 }
+
+.relative{
+    position: relative !important;
+    display: flex;
+    width: 100%;
+}
+input{
+    position: relative;
+    padding-top: 1.5em;
+    padding-bottom: 0.8em;
+}
+label.placeholder{
+    position: absolute;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all .2s ease-out;
+    transform: translateY(0);
+    padding-left: 20px;
+    font-size: 18px;
+    color: grey;
+    font-family: "Calibri Light", sans-serif;
+}
+input:focus{
+    outline: none;
+}
+input:focus + label.placeholder, input:not(:placeholder-shown) + label.placeholder{
+    align-items: center;
+    transform: translateY(-20px);
+    font-size: 12px;
+    padding-left: 20px;
+    transition: all .2s ease-out;
+}

@@ -6,12 +6,14 @@
                 <legend>
                     <h1>Se connecter</h1>
                 </legend>
-                <p>
-                    <input type="text" placeholder="Identifiant..." name="login" id="login_id" required/>
-                </p>
-                <p>
-                    <input type="password" placeholder="Mot de passe..." name="mdp" id="password_id" required/>
-                </p>
+                <div class="relative">
+                    <input type="text" name="login" id="login_id" placeholder="" required/>
+                    <label for="login_id" class="placeholder">Identifiant</label>
+                </div>
+                <div class="relative">
+                    <input type="password" name="mdp" placeholder="" id="password_id" />
+                    <label for="password_id" class="placeholder">Mot de passe</label>
+                </div>
                 <p>
                     <input type="submit" value="Je me connecte" />
                 </p>
@@ -25,21 +27,26 @@
                 <legend>
                     <h1>S'inscrire</h1>
                 </legend>
-                <p>
-                    <input type="text" name="login" id="login_id" placeholder="Login..." required/>
-                </p>
-                <p>
-                    <input type="password" name="mdp" id="password_id" placeholder="Mot de passe..." required/>
-                </p>
-                <p>
-                    <input type="text" placeholder="Nom..." name="nomAdherent" id="nom_id" required/>
-                </p>
-                <p>
-                    <input type="text" name="prenomAdherent" placeholder="Prénom..." id="prenom_id" required/>
-                </p>
-                <p>
-                    <input type="email" name="email" id="email_id" placeholder="E-mail..." required/>
-                </p>
+                <div class="relative">
+                    <input type="text" name="login" id="logins_id" placeholder="" required/>
+                    <label for="logins_id" class="placeholder">Login</label>
+                </div>
+                <div class="relative">
+                    <input type="password" name="mdp" id="passwords_id" placeholder="" required/>
+                    <label for="passwords_id" class="placeholder">Mot de passe</label>
+                </div>
+                <div class="relative">
+                    <input type="text" name="nomAdherent" id="nom_id" placeholder="" required/>
+                    <label for="nom_id" class="placeholder">Nom</label>
+                </div>
+                <div class="relative">
+                    <input type="text" name="prenomAdherent" id="prenom_id" placeholder="" required/>
+                    <label for="prenom_id" class="placeholder">Prénom</label>
+                </div>
+                <div class="relative">
+                    <input type="email" name="email" id="email_id" placeholder="" required/>
+                    <label for="email_id" class="placeholder">Adresse e-mail</label>
+                </div>
                 <p>
                     <input type="submit" value="Je m'inscris" />
                 </p>

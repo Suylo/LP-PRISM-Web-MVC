@@ -64,4 +64,40 @@ class Objet{
         }
     }
 
+
+    public static function addObjet($tableauDonnes)
+    {
+        $table = static::$objet;
+        $cle = static::$cle;
+
+        $requete = "INSERT INTO $table (";
+        $i = 0;
+        foreach ($tableauDonnes as $k => $v) {
+            if ($i == 0) {
+                $requete .= $k;
+            } else {
+                $requete .= ", " . $k;
+            }
+            $i++;
+        }
+        $requete .= ") VALUES (";
+        $i = 0;
+        foreach ($tableauDonnes as $k => $v) {
+            if ($i == 0) {
+                $requete .= ":" . $k;
+            } else {
+                $requete .= ", :" . $k;
+            }
+            $i++;
+        }
+        $requete .= ");";
+        $req_prep = Connexion::pdo()->prepare($requete);
+        try {
+            $req_prep->execute($tableauDonnes);
+            return true;
+        } catch (PDOException $e) {
+            echo "Erreur d'ajout : " . $e->getMessage();
+            return false;
+        }
+    }
 }
