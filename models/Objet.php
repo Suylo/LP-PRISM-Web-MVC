@@ -96,7 +96,9 @@ class Objet{
             $req_prep->execute($tableauDonnes);
             return true;
         } catch (PDOException $e) {
+            echo $requete . "\n";
             echo "Erreur d'ajout : " . $e->getMessage();
+            die();
             return false;
         }
     }

@@ -27,7 +27,19 @@ class AdherentControleur extends ObjetControleur {
         $prenom = $_GET['prenomAdherent'];
         $email = $_GET['email'];
         $dateAdhesion = $_GET['dateAdhesion'];
-        if(Adherent::addAdherent($login, $mdp, $nom, $prenom, $email, $dateAdhesion)){
+        $champValidationEmail = bin2hex(openssl_random_pseudo_bytes(16));
+        $tabObjets = [
+            "login" => $login,
+            "mdp" => $mdp,
+            "nomAdherent" => $nom,
+            "prenomAdherent" => $prenom,
+            "email" => $email,
+            "dateAdhesion" => $dateAdhesion,
+            "numCategorie" => 1,
+            "isAdmin" => 0,
+            "champValidationEmail" => $champValidationEmail,
+        ];
+        if(Adherent::addObjet($tabObjets)){
             $msg = "L'adhérent a bien été ajouté !";
             header("Location: index.php?action=lireObjets&controleur=AdherentControleur&msg=" . $msg ."#modal__msg");
         } else {

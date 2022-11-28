@@ -7,13 +7,13 @@
                 <h1><?= $titre ?></h1>
             </legend>
             <?php foreach ($fields as $field => $val): ?>
-                <p>
-                    <label for="<?= $field ?>_id"><?= $val[0] ?> :&nbsp;</label>
-                    <input type="<?= $val[1] ?>" name="<?= $field ?>" id="<?= $field ?>_id" required/>
-                </p>
-            <?php endforeach;?>
+                <div class="relative">
+                    <input type="<?= $val[1] ?>" name="<?= $field ?>" id="<?= $field ?>_id" placeholder="" required/>
+                    <label for="<?= $field ?>_id" class="placeholder"><?= $val[0] ?></label>
+                </div>
+            <?php endforeach; ?>
             <p>
-                <input type="submit" value="Envoyer" />
+                <input type="submit" value="Envoyer"/>
             </p>
         </fieldset>
 </div>

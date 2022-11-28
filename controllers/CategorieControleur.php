@@ -15,7 +15,11 @@ class CategorieControleur extends ObjetControleur {
     public static function creerCategorie(){
         $libelle = $_GET['libelle'];
         $nbLivres = $_GET['nbLivresAutorises'];
-        if(Categorie::addCategorie($libelle, $nbLivres)){
+        $tabObjets = [
+            "libelle" => $libelle,
+            "nbLivresAutorises" => $nbLivres
+        ];
+        if(Categorie::addObjet($tabObjets)){
             $msg = "La catégorie a bien été ajoutée !";
             header("Location: index.php?action=lireObjets&controleur=CategorieControleur&msg=" . $msg ."#modal__msg");
         } else {

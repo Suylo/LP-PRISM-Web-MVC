@@ -15,7 +15,11 @@ class NationaliteControleur extends ObjetControleur {
     public static function creerNationalite(){
         $pays = $_GET['pays'];
         $abrege = $_GET['abrege'];
-        if(Nationalite::addNationalite($pays, $abrege)){
+        $tabOjets = [
+            "pays" => $pays,
+            "abrege" => $abrege
+        ];
+        if(Nationalite::addObjet($tabOjets)){
             $msg = "La nationalité a bien été ajoutée !";
             header("Location: index.php?action=lireObjets&controleur=NationaliteControleur&msg=" . $msg ."#modal__msg");
         } else {

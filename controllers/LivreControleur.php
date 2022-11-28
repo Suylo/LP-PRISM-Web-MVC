@@ -14,7 +14,12 @@ class LivreControleur extends ObjetControleur {
     public static function creerLivre(){
         $titre = $_GET['titre'];
         $annee = $_GET['anneeParution'];
-        if(Livre::addLivre($titre, $annee, 1)){
+        $tabObjets = [
+            "titre" => $titre,
+            "anneeParution" => $annee,
+            "numGenre" => 1,
+        ];
+        if(Livre::addObjet($tabObjets)){
             $msg = "Le livre a bien été ajouté !";
             header("Location: index.php?action=lireObjets&controleur=LivreControleur&msg=" . $msg ."#modal__msg");
         } else {

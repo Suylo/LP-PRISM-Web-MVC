@@ -12,7 +12,7 @@ class GenreControleur extends ObjetControleur {
 
     public static function creerGenre(){
         $intitule = $_GET['intitule'];
-        if(Genre::addGenre($intitule)){
+        if(Genre::addObjet(["intitule" => $intitule])){
             $msg = "Le genre a bien été ajouté !";
             header("Location: index.php?action=lireObjets&controleur=GenreControleur&msg=" . $msg ."#modal__msg");
         } else {

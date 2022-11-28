@@ -29,22 +29,6 @@ class Categorie extends Objet
         return $this->get('libelle');
     }
 
-    public static function addCategorie($libelle, $nbLivresAutorises){
-        $requete = "INSERT INTO Categorie (libelle, nbLivresAutorises) VALUES (:libelle, :nbLivresAutorises)";
-        $req_prep = Connexion::pdo()->prepare($requete);
-        $tab = array(
-            "libelle" => $libelle,
-            "nbLivresAutorises" => $nbLivresAutorises
-        );
-        try {
-            $req_prep->execute($tab);
-            return true;
-        } catch (PDOException $e) {
-            echo "Erreur d'ajout : " . $e->getMessage();
-            return false;
-        }
-    }
-
     public static function updateCategorie($numCategorie, $libelle, $nbLivresAutorises){
         $requete = "UPDATE Categorie SET libelle = :libelle, nbLivresAutorises = :nbLivresAutorises WHERE numCategorie = :numCategorie";
         $req_prep = Connexion::pdo()->prepare($requete);
