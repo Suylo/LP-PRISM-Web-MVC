@@ -10,6 +10,16 @@
             <?php }?>
         </li>
         <li>
+            <?php if(isset($_GET['action']) == 'lireObjets' && $_GET['controleur'] == 'AdherentControleur'){ ?>
+                <a href="index.php?controleur=AdherentControleur&action=lireObjets" class="--active hover">
+                    <i class="bi-book"></i>&nbsp;&nbsp;Adhérents</a>
+            <?php } else { ?>
+                <a href="index.php?controleur=AdherentControleur&action=lireObjets" class="hover">
+                    <i class="bi-book"></i>&nbsp;&nbsp;Adhérents</a>
+            <?php } ?>
+        </li>
+        <li>
+
             <?php if(isset($_GET['action']) == "lireObjets" && $_GET['controleur'] == "LivreControleur") {?>
                 <a href="index.php?controleur=LivreControleur&action=lireObjets" class="--active hover">
                     <i class="bi-files"></i>&nbsp;&nbsp;Livres</a>
