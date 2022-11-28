@@ -10,26 +10,4 @@ class GenreControleur extends ObjetControleur {
         "intitule" => ["Nom du genre", "text"]
     ];
 
-    public static function creerGenre(){
-        $intitule = $_GET['intitule'];
-        if(Genre::addObjet(["intitule" => $intitule])){
-            $msg = "Le genre a bien été ajouté !";
-            header("Location: index.php?action=lireObjets&controleur=GenreControleur&msg=" . $msg ."#modal__msg");
-        } else {
-            $msg = "Le genre n'a pas pu être ajouté !";
-            header("Location: index.php?action=lireObjets&controleur=GenreControleur&msg=" . $msg . "#modal__msg");
-        }
-    }
-
-    public static function modifierGenre(){
-        $numGenre = $_GET['numGenre'];
-        $intitule = $_GET['intitule'];
-        if(Genre::updateGenre($numGenre, $intitule)){
-            $msg = "Le genre $numGenre a bien été modifié !";
-            header("Location: index.php?action=lireObjets&controleur=GenreControleur&msg=" . $msg ."#modal__msg");
-        } else {
-            $msg = "Le genre $numGenre n'a pas pu être modifié !";
-            header("Location: index.php?action=lireObjets&controleur=GenreControleur&msg=" . $msg . "#modal__msg");
-        }
-    }
 }

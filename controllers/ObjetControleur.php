@@ -46,14 +46,18 @@ class ObjetControleur
         $titre = "Un " . strtolower(static::$objet) . " : " . $_GET['num'.static::$objet];
         $numObjet = $_GET["num".static::$objet];
         $objet = static::$objet::getObjetById($numObjet);
+        $objetPrint = $objet->afficher();
         $tableauAffichage = array();
-        $tableauAffichage[] = "<div class='ligne'><div>[N°<strong>" . static::$objet. "</strong>] " .  $numObjet. "</div><div></div></div>";
+        $tableauAffichage[] = "<div class='ligne'><div>[N°<strong>" . static::$objet. "</strong>] " .  $objetPrint. "</div><div></div></div>";
         include "views/debut.php";
         Session::menuUrl();
         include("views/lesObjets.php");
         include("views/fin.html");
     }
 
+    /**
+     * @return void VUE FORMULAIRE ADD
+     */
     public static function addObjet(){
         $titre = "Ajouter un " . strtolower(static::$objet);
         $fields = static::$champs;
@@ -63,6 +67,9 @@ class ObjetControleur
         include("views/fin.html");
     }
 
+    /**
+     * @return void VUE FORMULAIRE EDIT
+     */
     public static function editObjet(){
         $titre = "Modifier un " . strtolower(static::$objet);
         $numObjet = $_GET["num".static::$objet];
@@ -73,6 +80,58 @@ class ObjetControleur
         include("views/formEditObjet.php");
         include("views/fin.html");
     }
+
+
+    /**
+     * @return void - FONCTION CREATION
+     */
+    public static function creerObjet()
+    {
+        $table = static::$objet;
+
+        $tableauDonnees = $_GET;
+        unset($tableauDonnees['controleur']);
+        unset($tableauDonnees['action']);
+        if (static::$objet == "Adherent") {
+            $tableauDonnees['numCategorie'] = 1;
+            $tableauDonnees['champValidationEmail'] = bin2hex(openssl_random_pseudo_bytes(16));
+        }
+
+        $newObjet = $table::addObjet($tableauDonnees);
+        if ($newObjet) {
+            $msg = "$table créé avec succès";
+            header("Location: index.php?action=lireObjets&controleur=" . $table . "Controleur&msg=" . $msg ."#modal__msg");
+        } else {
+            $msg = "Erreur lors de la création de $table";
+            header("Location: index.php?action=lireObjets&controleur=" . $table . "Controleur&msg=" . $msg ."#modal__msg");
+        }
+    }
+
+    /**
+     * @return void - FONCTION MODIFICATION
+     */
+    public static function modifierObjet(){
+        $table = static::$objet;
+
+        $tableauDonnees = $_GET;
+        unset($tableauDonnees['controleur']);
+        unset($tableauDonnees['action']);
+        $numObjet = $_GET["num".static::$objet];
+        if ($table == "Adherent") {
+            $updateObjet = $table::updateObjet($tableauDonnees, $tableauDonnees["login"]);
+        } else {
+            $updateObjet = $table::updateObjet($tableauDonnees, $numObjet);
+        }
+        if ($updateObjet){
+            $msg = "$table modifié avec succès";
+            header("Location: index.php?action=lireObjets&controleur=" . $table . "Controleur&msg=" . $msg ."#modal__msg");
+        } else {
+            $msg = "Erreur lors de la modification de $table";
+            header("Location: index.php?action=lireObjets&controleur=" . $table . "Controleur&msg=" . $msg ."#modal__msg");
+        }
+    }
+
+
 
     public static function deleteObjet(){
         $titre = "Supprimer un " . strtolower(static::$objet);

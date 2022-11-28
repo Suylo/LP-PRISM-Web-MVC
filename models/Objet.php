@@ -102,4 +102,31 @@ class Objet{
             return false;
         }
     }
+
+    public static function updateObjet($tableauDonnes, $id){
+        $table = static::$objet;
+        $cle = static::$cle;
+        $requete = "UPDATE $table SET ";
+        $i = 0;
+        foreach ($tableauDonnes as $k => $v) {
+            if ($i == 0) {
+                $requete .= $k . " = :" . $k;
+            } else {
+                $requete .= ", " . $k . " = :" . $k;
+            }
+            $i++;
+        }
+        $requete .= " WHERE $cle = :id_tag;";
+        $tableauDonnes["id_tag"] = $id;
+        $req_prep = Connexion::pdo()->prepare($requete);
+        try {
+            $req_prep->execute($tableauDonnes);
+            return true;
+        } catch (PDOException $e) {
+            echo $requete . "\n";
+            echo "Erreur d'ajout : " . $e->getMessage();
+            die();
+            return false;
+        }
+    }
 }

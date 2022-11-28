@@ -27,21 +27,4 @@ class Nationalite extends Objet
     public function afficher(){
         return $this->get('pays') . " [" . $this->get('abrege') . "]";
     }
-
-    public static function updateNationalite($numNationalite, $pays, $abrege){
-        $requete = "UPDATE Nationalite SET pays = :pays, abrege = :abrege WHERE numNationalite = :numNationalite";
-        $req_prep = Connexion::pdo()->prepare($requete);
-        $tab = array(
-            "numNationalite" => $numNationalite,
-            "pays" => $pays,
-            "abrege" => $abrege
-        );
-        try {
-            $req_prep->execute($tab);
-            return true;
-        } catch (PDOException $e) {
-            echo "Erreur de modification : " . $e->getMessage();
-            return false;
-        }
-    }
 }

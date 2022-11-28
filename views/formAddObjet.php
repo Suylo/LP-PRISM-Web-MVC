@@ -1,6 +1,6 @@
 <div class="form">
     <form action="index.php" method="get">
-        <input type="hidden" name="action" value="creer<?= static::$objet ?>">
+        <input type="hidden" name="action" value="creerObjet">
         <input type="hidden" name="controleur" value="<?= static::$objet ?>Controleur">
         <fieldset class="form" style="max-width: 150%">
             <legend>

@@ -25,20 +25,4 @@ class Genre extends Objet {
     public function afficher(){
         return $this->get('intitule');
     }
-
-    public static function updateGenre($numGenre, $intitule){
-        $requete = "UPDATE Genre SET intitule = :intitule WHERE numGenre = :numGenre";
-        $req_prep = Connexion::pdo()->prepare($requete);
-        $tab = array(
-            "numGenre" => $numGenre,
-            "intitule" => $intitule
-        );
-        try {
-            $req_prep->execute($tab);
-            return true;
-        } catch (PDOException $e) {
-            echo "Erreur de modification : " . $e->getMessage();
-            return false;
-        }
-    }
 }

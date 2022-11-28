@@ -11,36 +11,6 @@ class LivreControleur extends ObjetControleur {
         "anneeParution" => ["Année de Parution", "date"],
     ];
 
-    public static function creerLivre(){
-        $titre = $_GET['titre'];
-        $annee = $_GET['anneeParution'];
-        $tabObjets = [
-            "titre" => $titre,
-            "anneeParution" => $annee,
-            "numGenre" => 1,
-        ];
-        if(Livre::addObjet($tabObjets)){
-            $msg = "Le livre a bien été ajouté !";
-            header("Location: index.php?action=lireObjets&controleur=LivreControleur&msg=" . $msg ."#modal__msg");
-        } else {
-            $msg = "Le livre n'a pas pu être ajouté !";
-            header("Location: index.php?action=lireObjets&controleur=LivreControleur&msg=" . $msg . "#modal__msg");
-        }
-    }
-
-    public static function modifierLivre(){
-        $numLivre = $_GET['numLivre'];
-        $titre = $_GET['titre'];
-        $annee = $_GET['anneeParution'];
-        if(Livre::updateLivre($numLivre, $titre, $annee, 1)){
-            $msg = "Le livre $numLivre a bien été modifié !";
-            header("Location: index.php?action=lireObjets&controleur=LivreControleur&msg=" . $msg ."#modal__msg");
-        } else {
-            $msg = "Le livre $numLivre n'a pas pu être modifié !";
-            header("Location: index.php?action=lireObjets&controleur=LivreControleur&msg=" . $msg . "#modal__msg");
-        }
-    }
-
     public static function ajouterAuteurDuLivre(){
         $numLivre = $_GET['numLivre'];
         $numAuteur = $_GET['numAuteur'];

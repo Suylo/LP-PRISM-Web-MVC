@@ -25,29 +25,9 @@ class Auteur extends Objet {
 		parent::__construct($data);
 	}
 
-	// afficher()
 	public function afficher()
 	{
 		return $this->nom . " " . $this->prenom . " (" . $this->anneeNaissance . ")";
-	}
-
-	// update auteur
-	public static function updateAuteur($numAuteur, $nom, $prenom, $anneeNaissance){
-		$requete = "UPDATE Auteur SET nom = :nom, prenom = :prenom, anneeNaissance = :anneeNaissance WHERE numAuteur = :numAuteur";
-		$req_prep = Connexion::pdo()->prepare($requete);
-		$tab = array(
-			"numAuteur" => $numAuteur,
-			"nom" => $nom,
-			"prenom" => $prenom,
-			"anneeNaissance" => $anneeNaissance
-		);
-		try {
-			$req_prep->execute($tab);
-			return true;
-		} catch (PDOException $e) {
-			echo "Erreur de modification : " . $e->getMessage();
-			return false;
-		}
 	}
 
 	public static function getNationalitesByNumAuteur($i){

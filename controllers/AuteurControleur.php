@@ -12,40 +12,6 @@ class AuteurControleur extends ObjetControleur
         "anneeNaissance" => ["Année de naissance", "date"]
     ];
 
-    public static function creerAuteur()
-    {
-        $nom = $_GET['nom'];
-        $prenom = $_GET['prenom'];
-        $naissance = $_GET['anneeNaissance'];
-        $tabObjets = [
-            "nom" => $nom,
-            "prenom" => $prenom,
-            "anneeNaissance" => $naissance,
-        ];
-        if (Auteur::addObjet($tabObjets)) {
-            $msg = "L'auteur a bien été ajouté !";
-            header("Location: index.php?msg=" . $msg . "#modal__msg");
-        } else {
-            $msg = "L'auteur n'a pas pu être ajouté !";
-            header("Location: index.php?msg=" . $msg . "#modal__msg");
-        }
-    }
-
-    public static function modifierAuteur()
-    {
-        $numAuteur = $_GET['numAuteur'];
-        $nom = $_GET['nom'];
-        $prenom = $_GET['prenom'];
-        $naissance = $_GET['anneeNaissance'];
-        if (Auteur::updateAuteur($numAuteur, $nom, $prenom, $naissance)) {
-            $msg = "L'auteur $numAuteur a bien été modifié !";
-            header("Location: index.php?msg=" . $msg . "#modal__msg");
-        } else {
-            $msg = "L'auteur $numAuteur n'a pas pu être modifié !";
-            header("Location: index.php?msg=" . $msg . "#modal__msg");
-        }
-    }
-
     public static function ajouterNationaliteDeLAuteur()
     {
         $numAuteur = $_GET['numAuteur'];
