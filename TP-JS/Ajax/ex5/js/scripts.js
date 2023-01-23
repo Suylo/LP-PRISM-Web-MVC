@@ -38,28 +38,35 @@ function creer_interface() {
     div_input.appendChild(inputClear);
 
     div_input.addEventListener("click", function (e){
-        charger_verbes(e.target.value, "seq");
+        charger_verbes(e.target.value, "init");
     });
 
-    let inputSearch = document.querySelector('#input__btn')
-    inputSearch.addEventListener("change", function () {
+    let inputSearch = document.querySelector('#input__text')
+    inputSearch.addEventListener('input', function()  {
         charger_verbes(inputSearch.value, "seq");
-    });
+    })
+
+    inputClear.addEventListener('click', function (){
+        div_verbes.innerHTML = "";
+        inputSearch.value = null;
+    })
 }
 
-function callback_basique() {
-    div_verbes.innerHTML = JSON.parse(xhr.responseText);
-}
 
 function callback() {
-
+    let xhrJSON = JSON.parse(xhr.responseText);
+    div_verbes.innerHTML = "";
+    for (let i = 0; i < xhrJSON.length; i++) {
+        let p = document.createElement("p");
+        p.innerHTML = xhrJSON[i].libelle;
+        div_verbes.appendChild(p);
+    }
 }
 
 function charger_verbes(lettre, type) {
-    let url = "recherche.php?lettre=" + lettre + "&type=" + type;
-
-    div_verbes.innerHTML = xhr.responseText;
+    let url = "php/recherche.php?lettre=" + lettre + "&type=" + type;
     xhr.open("GET", url, true);
+    xhr.addEventListener('load', callback);
     xhr.send();
 }
 

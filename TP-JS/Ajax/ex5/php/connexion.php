@@ -4,9 +4,9 @@ class Connexion {
 
   // les attributs static caractéristiques de la connexion
 	static private $hostname = 'localhost';
-	static private $database = '***';      // votre id court
-	static private $login = '***';         // votre id court
-	static private $password = '***'; // votre mdp
+	static private $database = 'ajax';      // votre id court
+	static private $login = 'root';         // votre id court
+	static private $password = ''; // votre mdp
 
   static private $tabUTF8 = array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8");
 
