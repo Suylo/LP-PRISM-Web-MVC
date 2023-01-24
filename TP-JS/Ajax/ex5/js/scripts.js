@@ -27,6 +27,9 @@ function creer_interface() {
             inputAlpha.id = _letter;
             inputAlpha.value = _letter;
             newDiv.appendChild(inputAlpha);
+            inputAlpha.addEventListener("click", function (e){
+                charger_verbes(e.target.value, "init");
+            });
         })
         div_input.appendChild(newDiv);
     })
@@ -34,12 +37,10 @@ function creer_interface() {
     let inputClear = document.createElement("input");
     inputClear.type = "button";
     inputClear.id = "input__btn";
-    inputClear.value = "Effacer la liste";
+    inputClear.value = "Effacer";
     div_input.appendChild(inputClear);
 
-    div_input.addEventListener("click", function (e){
-        charger_verbes(e.target.value, "init");
-    });
+
 
     let inputSearch = document.querySelector('#input__text')
     inputSearch.addEventListener('input', function()  {

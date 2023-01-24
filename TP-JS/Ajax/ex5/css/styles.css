@@ -1,21 +1,31 @@
 body * {
-    font-family: "courier";
+    font-family: "Calibri", sans-serif;
     font-weight: bold;
+    overflow-y: hidden;
 }
 
 #input {
 
 }
 
-.row{
-    max-width: 90%;
+.row {
+    width: 90%;
+    position: fixed;
+    left: 0;
+    right: 0;
     margin: auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 30px;
+    height: 100vh;
+    align-items: center;
 }
+
 
 #input__text {
     width: 100%;
     padding: 1.5em;
-    font-size: 15px;
+    font-size: 16px;
     border: 2px solid #3f4276;
     box-sizing: border-box;
     border-radius: 15px 15px 0 0;
@@ -34,12 +44,13 @@ body * {
     border: 2px solid #4e54c8;
     background-color: #4e54c8;
     color: white;
-    font-size: 15px;
+    font-size: 16px;
     text-transform: uppercase;
     cursor: pointer;
     transition: all .3s ease;
 }
-#input__btn:hover{
+
+#input__btn:hover {
     background-color: white;
     color: #4e54c8;
 }
@@ -55,7 +66,7 @@ body * {
     cursor: pointer;
     color: white;
     padding: 1em;
-    font-size: 15px;
+    font-size: 16px;
     border-radius: 0;
     background-color: #3f4276;
     border: none;
@@ -71,4 +82,28 @@ body * {
 #input > div {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
+}
+
+#liste_verbes {
+    height: 35.5vh;
+    overflow: scroll;
+}
+
+p {
+    padding: 1em;
+    margin: 0;
+    cursor: pointer;
+    transition: all .3s ease-out;
+}
+
+#liste_verbes > p {
+    border: 1px solid #4e54c8;
+}
+
+#liste_verbes > p:first-child {
+    border-radius: 15px 15px 0 0;
+}
+
+#liste_verbes > p:last-child {
+    border-radius: 0 0 15px 15px;
 }
