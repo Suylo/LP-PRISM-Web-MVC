@@ -46,7 +46,6 @@ function chargerDonneesAJAX() {
     let xhr = new XMLHttpRequest();
     let url = "./php/routeur?objet=mediatheque&action=chargerDonneesMySQL";
     xhr.open("GET", url);
-    xhr.send();
     xhr.addEventListener("load", function() {
         let data = JSON.parse(xhr.responseText);
         let livres = data[0];
@@ -54,7 +53,9 @@ function chargerDonneesAJAX() {
 
         M.insererAdherents(adherents);
         M.insererLivres(livres);
+        MAJ();
     });
+    xhr.send();
 }
 
 // méthode de sauvegarde des données
@@ -78,9 +79,14 @@ function afficherAdherents() {
     // en insérant entre parenthèses le nombre d'emprunts
     // si l'adhérent a des emprunts)
     vide(divlisteAdh);
-    let adherents = M.tabAdherents;
-    adherents.forEach(unAdherent => {
-       console.log(unAdherent.toString());
+    M.tabAdherents.forEach(function(adh) {
+        let texte = adh.nom + " " + adh.prenom;
+        let ul = document.createElement("ul");
+        let li = document.createElement("li");
+        li.innerHTML = texte;
+        ul.appendChild(li);
+
+        divlisteAdh.appendChild(ul);
     });
 }
 
@@ -90,7 +96,19 @@ function afficherLivres() {
     // en insérant le livre dans l'une ou dans l'autre selon qu'il est emprunté ou non
     vide(divlisteLivresDispos);
     vide(divlisteLivresEmpruntes);
-
+    M.tabLivres.forEach(function(livre) {
+        let texte = livre.titre + " | <strong>" + livre.auteur + "</strong>";
+        let ul = document.createElement("ul");
+        let li = document.createElement("li");
+        li.innerHTML = texte;
+        li.id = livre.numLivre;
+        ul.appendChild(li)
+        if (livre.estEmprunte === "1") {
+            divlisteLivresEmpruntes.appendChild(ul);
+        } else {
+            divlisteLivresDispos.appendChild(ul);
+        }
+    });
 }
 
 // méthodes de gestion des événements liés aux items des listes
@@ -106,6 +124,21 @@ function eventsLivresDispos() {
     // et on change le style du bouton de sauvegarde pour prévenir
     // l'utilisateur que des changements sont intervenus.
     // Idéalement, prévoir de tester le numAdhérent entré pour qu'il soit valide.
+
+    let tabLivresDispos = [];
+    M.tabLivres.forEach(function(livre) {
+        if (livre.estEmprunte === "0") {
+            tabLivresDispos.push(livre);
+        }
+    });
+    tabLivresDispos.forEach(function(livre) {
+        let livreDispo = document.getElementById(livre.numLivre);
+        livreDispo.addEventListener("click", function() {
+            let numAdherent = prompt("À quel adhérent prêter le livre " + livre.titre + " ?");
+            let unAdh = M.getAdherentByNumAdherent(numAdherent);
+            M.prete(livre, unAdh);
+        });
+    });
 }
 
 function eventsLivresEmpruntes() {
@@ -114,12 +147,32 @@ function eventsLivresEmpruntes() {
     // ce retour implique que la médiathèque récupère le livre,
     // et qu'on met à jour la médiathèque.
     // Ne pas oublier le changement de style du bouton de sauvegarde.
+    let tabLivresEmpruntes = [];
+    M.tabLivres.forEach(function(livre) {
+        if (livre.estEmprunte === "1") {
+            tabLivresEmpruntes.push(livre);
+        }
+
+    });
+    tabLivresEmpruntes.forEach(function(livre) {
+        let livreEmprunte = document.getElementById(livre.numLivre);
+        livreEmprunte.addEventListener("click", function() {
+            let retour = confirm("Confirmez-vous le retour du livre " + livre.titre + " ?");
+            if (retour) {
+                M.retour(livre);
+            }
+        });
+    });
 }
 
 function MAJ() {
-    afficherAdherents();
     // on affiche les adhérents, on affiche les livres,
     // et on lance les fonctions de gestion des divers événements click
+    afficherAdherents();
+    afficherLivres();
+    eventsAdherents();
+    eventsLivresDispos();
+    eventsLivresEmpruntes();
 }
 
 MAJ();

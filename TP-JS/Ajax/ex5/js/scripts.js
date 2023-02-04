@@ -12,33 +12,28 @@ function creer_interface() {
         ['s', 't', 'u', 'v', 'z', 'œ']
     ];
 
-    let inputText = document.createElement("input");
-    inputText.type = "text";
-    inputText.id = "input__text";
-    inputText.placeholder = "Entrez une séquence...";
+    let input_texte = document.createElement("input");
+    input_texte.type = "text";
     div_input.appendChild(inputText);
 
 
-    tab.forEach(_ligne => {
+    tab.forEach(row => {
         let newDiv = document.createElement("div");
-        _ligne.forEach(_letter => {
-            let inputAlpha = document.createElement("input");
-            inputAlpha.type = "button";
-            inputAlpha.id = _letter;
-            inputAlpha.value = _letter;
-            newDiv.appendChild(inputAlpha);
-            inputAlpha.addEventListener("click", function (e){
+        row.forEach(letter => {
+            let input_btn = document.createElement("input");
+            input_btn.type = "button";
+            input_btn.value = letter;
+            newDiv.appendChild(input_btn);
+            input_btn.addEventListener("click", function (e){
                 charger_verbes(e.target.value, "init");
             });
         })
         div_input.appendChild(newDiv);
     })
 
-    let inputClear = document.createElement("input");
-    inputClear.type = "button";
-    inputClear.id = "input__btn";
-    inputClear.value = "Effacer";
-    div_input.appendChild(inputClear);
+    let input_effacer = document.createElement("input");
+    input_effacer.type = "button";
+    div_input.appendChild(input_effacer);
 
 
 

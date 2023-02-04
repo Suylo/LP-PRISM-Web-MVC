@@ -21,7 +21,7 @@ class Mediatheque {
 		this.tabAdherents.push(adherent);
 	}
 
-	prete(livre,adherent) {
+	prete(livre, adherent) {
 		livre.estEmprunte = 1;
 		livre.numEmprunteur = adherent.numAdherent;
 		adherent.emprunte(livre);
