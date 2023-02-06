@@ -24,9 +24,9 @@ class Adherent {
 
 	listeEmprunts() {
 		let liste = "";
-		liste.forEach(unLivre => {
-			liste += unLivre.titre + "(" + unLivre.auteur + ")\n";
-		});
+		this.tabEmprunts.forEach(emprunt => {
+			liste += "\n" + emprunt.numLivre + " - " + emprunt.titre + " | " + emprunt.auteur;
+		})
 		return liste;
 	}
 

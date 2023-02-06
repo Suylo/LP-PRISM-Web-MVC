@@ -20,8 +20,6 @@ let M = new Mediatheque();
 
 // méthodes utiles internes
 function vide(div) {
-    // vide de toutes ses balises la div
-    // passée en paramètre
     div.innerHTML = "";
 }
 
@@ -46,16 +44,17 @@ function chargerDonneesAJAX() {
     let xhr = new XMLHttpRequest();
     let url = "./php/routeur?objet=mediatheque&action=chargerDonneesMySQL";
     xhr.open("GET", url);
-    xhr.addEventListener("load", function() {
-        let data = JSON.parse(xhr.responseText);
-        let livres = data[0];
-        let adherents = data[1];
+    xhr.send();
 
-        M.insererAdherents(adherents);
-        M.insererLivres(livres);
+    xhr.addEventListener("load", function () {
+        let [tabLivres, tabAdherents] = JSON.parse(xhr.responseText);
+        tabLivres = tabLivres.map(livre => new Livre(parseInt(livre.numLivre), livre.titre, livre.auteur, parseInt(livre.numEmprunteur), livre.estEmprunte));
+        M.insererLivres(tabLivres);
+        tabAdherents = tabAdherents.map(adherent => new Adherent(parseInt(adherent.numAdherent), adherent.nom, adherent.prenom));
+        M.insererAdherents(tabAdherents);
+        M.insererEmprunts(tabLivres);
         MAJ();
     });
-    xhr.send();
 }
 
 // méthode de sauvegarde des données
@@ -67,109 +66,117 @@ function sauvegardeMySQL() {
     // et en passant en paramètre dans l'url la chaîne correspondant au tableau des livres
     // enfin, on redonne au bouton de sauvegarde son aspect initial
     let xhrAdherent = new XMLHttpRequest();
-    let urlAdherent = "./php/routeur.php?objet=adherent&action="
+    let urlAdherent = "./php/routeur.php?objet=adherent&action=MAJadherents&donnees=" + JSON.stringify(M.tabAdherents);
+    xhrAdherent.open("GET", urlAdherent);
+    xhrAdherent.send();
 
+    let xhrEmprunteur = new XMLHttpRequest();
+    let urlEmprunteur = "./php/routeur.php?objet=livre&action=MAJemprunteurs&donnees=" + JSON.stringify(M.tabLivres);
+    xhrEmprunteur.open("GET", urlEmprunteur);
+    xhrEmprunteur.send();
 }
 
 
 // méthodes d'affichage et mise à jour de l'interface
 function afficherAdherents() {
-    // on commence par vider la div des adhérents
-    // ensuite, on la reconstruit élément par élément
-    // en insérant entre parenthèses le nombre d'emprunts
-    // si l'adhérent a des emprunts)
     vide(divlisteAdh);
-    M.tabAdherents.forEach(function(adh) {
+    M.tabAdherents.forEach(adh => {
         let texte = adh.nom + " " + adh.prenom;
         let ul = document.createElement("ul");
         let li = document.createElement("li");
-        li.innerHTML = texte;
+        li.textContent = texte;
+        li.id = "adherent-" + adh.numAdherent;
+        if (adh.tabEmprunts.length > 0) {
+            li.textContent += " (" + adh.tabEmprunts.length + ")";
+        }
         ul.appendChild(li);
-
         divlisteAdh.appendChild(ul);
     });
 }
 
 function afficherLivres() {
-    // on commence par vider les div des livres dispos et des livres empruntés
-    // ensuite, on les reconstruit élément par élément
-    // en insérant le livre dans l'une ou dans l'autre selon qu'il est emprunté ou non
     vide(divlisteLivresDispos);
     vide(divlisteLivresEmpruntes);
-    M.tabLivres.forEach(function(livre) {
+    M.tabLivres.forEach(function (livre) {
         let texte = livre.titre + " | <strong>" + livre.auteur + "</strong>";
         let ul = document.createElement("ul");
         let li = document.createElement("li");
         li.innerHTML = texte;
-        li.id = livre.numLivre;
-        ul.appendChild(li)
-        if (livre.estEmprunte === "1") {
+        if (livre.estEmprunte === "1" || livre.estEmprunte === 1) {
+            li.id = "livre-emprunt-" + livre.numLivre;
             divlisteLivresEmpruntes.appendChild(ul);
         } else {
+            li.id = "livre-" + livre.numLivre;
             divlisteLivresDispos.appendChild(ul);
         }
+        ul.appendChild(li)
     });
 }
 
 // méthodes de gestion des événements liés aux items des listes
 function eventsAdherents() {
-    // pour chaque adhérent de la div, on ajoute un écouteur d'événement click
-    // qui permet d'afficher la liste d'emprunts de l'adhérent (méthode listeEmprunts())
+    M.tabAdherents.forEach(adh => {
+        let adherent = document.getElementById("adherent-" + adh.numAdherent);
+        adherent.addEventListener('click', (e) => {
+            let adherent = M.getAdherentByNumAdherent(adh.numAdherent);
+            if (adh.tabEmprunts.length > 0) {
+                alert("Adhérent : " + adherent.nom + " " + adherent.prenom + "\n\nListe de livres empruntés : " + adherent.listeEmprunts());
+            } else {
+                alert("L'adhérent ne possède aucun emprunt");
+            }
+        })
+    })
 }
 
 function eventsLivresDispos() {
-    // pour chaque livre dispo, on ajoute un écouteur d'événement click
-    // qui demande à quel adhérent on prête le livre.
-    // ensuite, on prête le livre à l'adhérent,
-    // et on change le style du bouton de sauvegarde pour prévenir
-    // l'utilisateur que des changements sont intervenus.
-    // Idéalement, prévoir de tester le numAdhérent entré pour qu'il soit valide.
-
     let tabLivresDispos = [];
-    M.tabLivres.forEach(function(livre) {
-        if (livre.estEmprunte === "0") {
+    M.tabLivres.forEach(function (livre) {
+        if (livre.estEmprunte === "0" || livre.estEmprunte === 0) {
             tabLivresDispos.push(livre);
         }
     });
-    tabLivresDispos.forEach(function(livre) {
-        let livreDispo = document.getElementById(livre.numLivre);
-        livreDispo.addEventListener("click", function() {
+    tabLivresDispos.forEach(function (livre) {
+        let livreDispo = document.getElementById("livre-" + livre.numLivre);
+        livreDispo.addEventListener("click", function () {
             let numAdherent = prompt("À quel adhérent prêter le livre " + livre.titre + " ?");
-            let unAdh = M.getAdherentByNumAdherent(numAdherent);
-            M.prete(livre, unAdh);
+            let unAdh = M.getAdherentByNumAdherent(parseInt(numAdherent));
+            if (unAdh) {
+                M.prete(livre, unAdh);
+                saveBtn();
+                MAJ();
+            } else {
+                alert("l'adhérent n'existe pas !");
+            }
         });
     });
 }
 
 function eventsLivresEmpruntes() {
-    // pour chaque livre emprunté, on ajoute un écouteur d'événement click
-    // qui demande confirmation du retour du livre.
-    // ce retour implique que la médiathèque récupère le livre,
-    // et qu'on met à jour la médiathèque.
-    // Ne pas oublier le changement de style du bouton de sauvegarde.
     let tabLivresEmpruntes = [];
-    M.tabLivres.forEach(function(livre) {
-        if (livre.estEmprunte === "1") {
+    M.tabLivres.forEach(function (livre) {
+        if (livre.estEmprunte === "1" || livre.estEmprunte === 1) {
             tabLivresEmpruntes.push(livre);
         }
 
     });
-    tabLivresEmpruntes.forEach(function(livre) {
-        let livreEmprunte = document.getElementById(livre.numLivre);
-        livreEmprunte.addEventListener("click", function() {
+    tabLivresEmpruntes.forEach(function (livre) {
+        let livreEmprunte = document.getElementById("livre-emprunt-" + livre.numLivre);
+        livreEmprunte.addEventListener("click", function () {
             let retour = confirm("Confirmez-vous le retour du livre " + livre.titre + " ?");
             if (retour) {
-                M.retour(livre);
+                M.recupere(livre);
+                MAJ();
+                saveBtn();
+            } else {
+                alert("Il faut que les champs soit bien complété !");
             }
         });
     });
 }
 
 function MAJ() {
-    // on affiche les adhérents, on affiche les livres,
-    // et on lance les fonctions de gestion des divers événements click
-    afficherAdherents();
     afficherLivres();
+    afficherAdherents();
     eventsAdherents();
     eventsLivresDispos();
     eventsLivresEmpruntes();
@@ -180,28 +187,58 @@ MAJ();
 window.addEventListener("load", chargerDonneesAJAX);
 
 boutonSauvegarder.addEventListener('click', function () {
-    // après confirmation, on redonne son style initial au bouton de sauvegarde,
-    // puis on lance la sauvegarde
+    saveBtn(true);
+    sauvegardeMySQL();
 });
 
 boutonRecharger.addEventListener('click', function () {
-    // après confirmation, on recharge la page par location.reload()
+    let confirmReload = confirm("Êtes-vous sûr de vouloir recharger la page ? Cela affectera tous vos changements non sauvegardés!!")
+    if (confirmReload) {
+        location.reload();
+    }
 });
 
 enrLivre.addEventListener('click', function () {
-    // si les deux imput sont bien remplis,
-    // alors on ajoute le livre à la médiathèque.
-    // conseil : au moment de créer le nouveau livre (qui sera bien entendu pas encore emprunté),
-    // s'arranger pour que son numLivre dépasse d'une unité le max des numLivre existants.
-    // ensuite, on adapte le style du bouton de sauvegarde, on efface le contenu des
-    // deux input de saisie et on met à jour la médiathèque
+    let inputTitre = document.getElementById("titreLivre");
+    let inputAuteur = document.getElementById("auteurLivre");
+    if (inputAuteur.value && inputTitre.value) {
+        let count = M.tabLivres.length;
+        let newLivre = new Livre(count + 1, inputTitre.value, inputAuteur.value, 0, 0);
+        M.ajouteLivre(newLivre);
+        MAJ();
+        saveBtn();
+        inputTitre.value = "";
+        inputAuteur.value = "";
+    } else {
+        alert("Veuillez remplir les champs avant de continuer !");
+    }
 });
 
 enrAdh.addEventListener('click', function () {
-    // si les deux imput sont bien remplis,
-    // alors on ajoute l'adhérent à la médiathèque.
-    // conseil : au moment de créer le nouvel adhérent,
-    // s'arranger pour que son numAdherent dépasse d'une unité le max des numAdherent existants.
-    // ensuite, on adapte le style du bouton de sauvegarde, on efface le contenu des
-    // deux input de saisie et on met à jour la médiathèque
+    let inputNom = document.getElementById("nomAdherent");
+    let inputPrenom = document.getElementById("prenomAdherent");
+    if (inputNom.value && inputPrenom.value) {
+        let count = M.tabAdherents.length;
+        let newAdherent = new Adherent(count + 1, inputNom.value, inputPrenom.value);
+        M.ajouteAdherent(newAdherent);
+        MAJ();
+        saveBtn();
+        inputNom.value = "";
+        inputPrenom.value = "";
+    } else {
+        alert("Veuillez remplir les champs avant de continuer !");
+    }
 });
+
+
+function saveBtn(remove = false) {
+    if (!remove) {
+        boutonSauvegarder.style.background = "white";
+        boutonSauvegarder.style.color = "green";
+        boutonSauvegarder.style.border = "1px solid green";
+        boutonSauvegarder.style.boxShadow = "2px 2px 0px rgba(0,0,0,0.2)";
+    } else {
+        boutonSauvegarder.style.background = "grey";
+        boutonSauvegarder.style.color = "black";
+    }
+}
