@@ -43,7 +43,7 @@ body * {
 #boutons {
 	display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 #boutons>input {
@@ -62,10 +62,13 @@ legend {
 h2 {
 	font-size: 2em;
 	color:white;
-	background-color: grey;
+	background-color: #459c46;
     border-radius: 4px;
+	text-transform: uppercase;
+	letter-spacing: 0.2em;
     padding: 10px;
-    box-shadow: 4px 4px 4px black;
+    box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.2);
+	font-family: "Arial", sans-serif;
     text-align: center;
 }
 ul {
@@ -83,4 +86,51 @@ input {
 	padding:5px;
 	font-size: 1.2em;
 
+}
+
+
+#sauvegarder{
+	border-radius: 5px;
+	border: none;
+	background-color: #378e9c;
+	color: white;
+	box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.2);
+
+	font-family: "Arial", sans-serif;
+	transition: all .2s cubic-bezier(0.56, 0.45, 0.34, 0.34);
+}
+#sauvegarder:hover{
+	background-color: rgba(55, 142, 156, 0.75);
+	box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.3);
+}
+
+#recharger{
+	border-radius: 5px;
+	border: none;
+	background-color: #f18b17;
+	box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.2);
+	color: white;
+	font-family: "Arial", sans-serif;
+	transition: all .2s cubic-bezier(0.56, 0.45, 0.34, 0.34);
+	padding: 1em 1em;
+}
+#recharger:hover{
+	background-color: rgba(241, 139, 23, 0.79);
+	box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.3);
+}
+
+
+#enregistrerAdherent, #enregistrerLivre{
+	border-radius: 5px;
+	border: none;
+	background-color: #459c46;
+	box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.2);
+	color: white;
+	font-family: "Arial", sans-serif;
+	transition: all .2s cubic-bezier(0.56, 0.45, 0.34, 0.34);
+	padding: 1em 1em;
+}
+#enregistrerAdherent:hover, #enregistrerLivre:hover{
+	background-color: rgba(69, 156, 70, 0.76);
+	box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.3);
 }
